@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chata Pecka | Luxusní ubytování v přírodě</title>
+  
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --primary: #0f766e;
@@ -15,9 +20,16 @@
       --gray-light: #f8fafc;
       --border: #e2e8f0;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--gray-light); color: var(--text); line-height: 1.7; }
     
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--gray-light);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
     /* Hero sekce */
     .hero {
       background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), url('IMG_5687.jpeg') center/cover no-repeat;
@@ -29,226 +41,337 @@
     .hero p { font-size: 1.25rem; font-weight: 400; max-width: 600px; margin: 0 auto; opacity: 0.95; }
 
     /* Hlavní kontejner */
-    .wrapper { max-width: 1000px; margin: -80px auto 60px auto; padding: 0 20px; position: relative; z-index: 10; }
-    
-    .card { background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); margin-bottom: 30px; }
-    
+    .wrapper {
+      max-width: 1000px;
+      margin: -80px auto 60px auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+    }
+
     h2 { font-size: 1.8rem; color: #0f172a; margin-bottom: 20px; font-weight: 700; }
     p.lead { font-size: 1.1rem; color: #475569; margin-bottom: 30px; }
 
-    /* Vybavení - ikony/karty */
-    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 40px; }
-    .feature-item { background: var(--accent); padding: 20px; border-radius: 12px; border: 1px solid #bbf7d0; text-align: center; font-weight: 600; color: var(--primary-dark); }
+    /* Vybavení - karty */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .feature-item {
+      background: var(--accent);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #bbf7d0;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    /* Lokalita box */
+    .location-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 20px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 40px;
+      font-size: 1.05rem;
+      color: #334155;
+    }
+    .location-box p { margin-bottom: 10px; }
+    .location-box p:last-child { margin-bottom: 0; }
+    .coords {
+      display: inline-block;
+      background: #e2e8f0;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      color: #0f172a;
+      font-weight: 600;
+    }
 
     /* Fotogalerie */
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-bottom: 40px; }
-    .gallery img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .gallery img:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.12); }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .gallery img:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    }
 
     /* Formulář */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group.full { grid-column: span 2; }
-    label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; color: #334155; }
-    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"] {
-      width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; font-family: inherit; background: #fcfcfc; transition: border-color 0.2s;
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
     }
-    input:focus { outline: none; border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1); }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group.full {
+      grid-column: span 2;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      color: #334155;
+    }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"] {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: #fcfcfc;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+    }
 
-    .price-box { background: var(--accent); border: 1px solid #bbf7d0; padding: 20px; border-radius: 12px; text-align: center; margin: 30px 0; }
+    /* Cena */
+    .price-box {
+      background: var(--accent);
+      border: 1px solid #bbf7d0;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      margin: 30px 0;
+    }
     .price-label { font-size: 0.95rem; color: #166534; font-weight: 500; }
     .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--primary-dark); margin-top: 5px; }
-    
-    button { width: 100%; background-color: var(--primary); color: white; border: none; padding: 16px; font-size: 1.05rem; font-weight: 700; border-radius: 10px; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+
+    /* Tlačítko */
+    button {
+      width: 100%;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 16px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
     button:hover { background-color: var(--primary-dark); }
     button:active { transform: scale(0.99); }
-    
-    #message { margin-top: 20px; padding: 16px; border-radius: 10px; display: none; text-align: center; font-weight: 600; }
+
+    /* Zprávy odeslání */
+    #message {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      display: none;
+      text-align: center;
+      font-weight: 600;
+    }
     .success { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
     .error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
 
-    footer { text-align: center; padding: 40px 20px; color: #64748b; font-size: 0.9rem; }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
 
     @media(max-width: 768px) {
       .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: span 1; }
       .hero h1 { font-size: 2.3rem; }
     }
   </style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>Chata Pecka</h1>
-  <p>Váš dokonalý únik do klidu panenské přírody plné pohody a komfortu.</p>
-</div>
-
-<div class="wrapper">
-  
-  <div class="card">
-    <h2>O ubytování</h2>
-    <p class="lead">Zažijte nezapomenutelný pobyt v srdci přírody. Chata Pecka nabízí kompletní zázemí pro rodiny i skupiny přátel, kteří hledají odpočinek, turistiku a soukromí obklopené pastvinami a lesy.</p>
-    
-    <div class="features">
-      <div class="feature-item">🌲 Klidná lokalita</div>
-      <div class="feature-item">🛏️ Moderní vybavení</div>
-      <div class="feature-item">🔥 Venkovní posezení</div>
-      <div class="feature-item">🚗 Parkování u chaty</div>
-    </div>
-
-    <h2>Fotogalerie</h2>
-    <div class="gallery">
-      <img src="IMG_5649.jpeg" alt="Chata Pecka interiér">
-      <img src="IMG_5651.jpeg" alt="Detail vybavení">
-      <img src="IMG_5670.jpeg" alt="Pohled z chaty">
-      <img src="IMG_5674.jpeg" alt="Okolí chaty">
-      <img src="IMG_5682.jpeg" alt="Zahrada a příroda">
-      <img src="IMG_5683.jpeg` alt="Pohled na exteriér">
-    </div>
-
-    <h2>Rezervace pobytu</h2>
-    <p class="lead">Zvolte si termín vašeho pobytu a vyplňte kontaktní údaje. Rezervace je nezávazná.</p>
-
-    <form id="bookingForm">
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="check_in">Příjezd (Check-in)</label>
-          <input type="date" id="check_in" required>
-        </div>
-
-        <div class="form-group">
-          <label for="check_out">Odjezd (Check-out)</label>
-          <input type="date" id="check_out" required>
-        </div>
-
-        <div class="form-group">
-          <label for="guests">Počet hostů</label>
-          <input type="number" id="guests" min="1" max="10" value="2" required>
-        </div>
-
-        <div class="form-group">
-          <label for="guest_name">Jméno a příjmení</label>
-          <input type="text" id="guest_name" placeholder="Jan Novák" required>
-        </div>
-
-        <div class="form-group">
-          <label for="guest_email">E-mail</label>
-          <input type="email" id="guest_email" placeholder="jan@novak.cz" required>
-        </div>
-
-        <div class="form-group">
-          <label for="guest_phone">Telefon</label>
-          <input type="tel" id="guest_phone" placeholder="+420 777 888 999" required>
-        </div>
-      </div>
-
-      <div class="price-box">
-        <div class="price-label">Odhadovaná celková cena</div>
-        <div class="price-amount" id="totalPrice">0 Kč</div>
-      </div>
-
-      <button type="submit" id="submitBtn">Odeslat závaznou poptávku</button>
-    </form>
-
-    <div id="message"></div>
+  <!-- Hero sekce -->
+  <div class="hero">
+    <h1>Chata Pecka</h1>
+    <p>Váš dokonalý únik do klidu panenské přírody plné pohody a komfortu.</p>
   </div>
 
-</div>
+  <!-- Hlavní obal obsahu -->
+  <div class="wrapper">
+    <div class="card">
+      
+      <!-- O ubytování -->
+      <h2>O ubytování</h2>
+      <p class="lead">Zažijte nezapomenutelný pobyt v srdci přírody. Chata Pecka nabízí kompletní zázemí pro rodiny i skupiny přátel, kteří hledají odpočinek, turistiku a soukromí obklopené pastvinami a lesy.</p>
+      
+      <div class="features">
+        <div class="feature-item">🌲 Klidná lokalita</div>
+        <div class="feature-item">🛏️ Moderní vybavení</div>
+        <div class="feature-item">🔥 Venkovní posezení</div>
+        <div class="feature-item">🚗 Parkování u chaty</div>
+      </div>
 
-<footer>
-  &copy; 2026 Chata Pecka. Všechna práva vyhrazena.
-</footer>
+      <!-- Sekce lokalita -->
+      <h2>Lokalita a okolí</h2>
+      <div class="location-box">
+        <p>🌲 <strong>Chráněná krajinná oblast:</strong> Chata se nachází v naprostém klidu přímé přírody chráněné krajinné oblasti, daleko od městského ruchu, ideální pro pěší turisty, cyklisty a milovníky čistého vzduchu.</p>
+        <p>📍 <strong>GPS souřadnice:</strong> <span class="coords">48.80102° S, 13.93219° V</span></p>
+      </div>
 
-<script>
-  const SUPABASE_URL = 'https://mgtwqvovodlvekdboale.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_rwgkmX0f2MzyHIicrUyVyw_UQV6ke4d';
+      <!-- Fotogalerie -->
+      <h2>Fotogalerie</h2>
+      <div class="gallery">
+        <img src="IMG_5649.jpeg" alt="Chata Pecka interiér">
+        <img src="IMG_5651.jpeg" alt="Detail vybavení">
+        <img src="IMG_5670.jpeg" alt="Pohled z chaty">
+        <img src="IMG_5674.jpeg" alt="Okolí chaty">
+        <img src="IMG_5682.jpeg" alt="Zahrada a příroda">
+        <img src="IMG_5683.jpeg" alt="Pohled na exteriér">
+      </div>
 
-  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const PRICE_PER_NIGHT = 2500;
+      <!-- Rezervační formulář -->
+      <h2>Rezervace pobytu</h2>
+      <p class="lead">Zvolte si termín vašeho pobytu a vyplňte kontaktní údaje. Rezervace je nezávazná.</p>
+      
+      <form id="bookingForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="check_in">Příjezd (Check-in)</label>
+            <input type="date" id="check_in" required>
+          </div>
+          <div class="form-group">
+            <label for="check_out">Odjezd (Check-out)</label>
+            <input type="date" id="check_out" required>
+          </div>
+          <div class="form-group">
+            <label for="guests">Počet hostů</label>
+            <input type="number" id="guests" min="1" max="10" value="2" required>
+          </div>
+          <div class="form-group">
+            <label for="guest_name">Jméno a příjmení</label>
+            <input type="text" id="guest_name" placeholder="Jan Novák" required>
+          </div>
+          <div class="form-group full">
+            <label for="guest_email">E-mail</label>
+            <input type="email" id="guest_email" placeholder="jan@novak.cz" required>
+          </div>
+          <div class="form-group full">
+            <label for="guest_phone">Telefon</label>
+            <input type="tel" id="guest_phone" placeholder="+420 777 888 999" required>
+          </div>
+        </div>
 
-  const checkInInput = document.getElementById('check_in');
-  const checkOutInput = document.getElementById('check_out');
-  const totalPriceEl = document.getElementById('totalPrice');
-  const messageDiv = document.getElementById('message');
+        <div class="price-box">
+          <div class="price-label">Odhadovaná celková cena</div>
+          <div class="price-amount" id="totalPrice">0 Kč</div>
+        </div>
 
-  const today = new Date().toISOString().split('T')[0];
-  checkInInput.min = today;
-  checkOutInput.min = today;
+        <button type="submit" id="submitBtn">Odeslat závaznou poptávku</button>
+      </form>
 
-  function calculatePrice() {
-    const checkIn = new Date(checkInInput.value);
-    const checkOut = new Date(checkOutInput.value);
+      <div id="message"></div>
+    </div>
+  </div>
 
-    if (checkInInput.value && checkOutInput.value && checkOut > checkIn) {
-      const nights = Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-      const total = nights * PRICE_PER_NIGHT;
-      totalPriceEl.innerText = total.toLocaleString('cs-CZ') + ' Kč (' + nights + ' ' + (nights === 1 ? 'noc' : (nights < 5 ? 'noci' : 'nocí')) + ')';
-      return total;
-    } else {
-      totalPriceEl.innerText = '0 Kč';
-      return 0;
-    }
-  }
+  <footer>
+    &copy; 2026 Chata Pecka. Všechna práva vyhrazena.
+  </footer>
 
-  checkInInput.addEventListener('change', () => {
-    checkOutInput.min = checkInInput.value;
-    calculatePrice();
-  });
-  checkOutInput.addEventListener('change', calculatePrice);
+  <!-- JavaScript pro výpočet ceny a Supabase -->
+  <script>
+    const SUPABASE_URL = 'https://tvuj-supabase-url.supabase.co'; // Upravte dle svého projektu
+    const SUPABASE_ANON_KEY = 'sb_publishable_rwgkmX0f2MzyHIicrUyVyw_UQV6ke4d';
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    const PRICE_PER_NIGHT = 2500;
+    const checkInInput = document.getElementById('check_in');
+    const checkOutInput = document.getElementById('check_out');
+    const totalPriceEl = document.getElementById('totalPrice');
 
-  document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    messageDiv.style.display = 'none';
-
-    const check_in = checkInInput.value;
-    const check_out = checkOutInput.value;
-    const guests = parseInt(document.getElementById('guests').value);
-    const guest_name = document.getElementById('guest_name').value;
-    const guest_email = document.getElementById('guest_email').value;
-    const guest_phone = document.getElementById('guest_phone').value;
-    const total_price = calculatePrice();
-
-    if (total_price <= 0) {
-      showMessage('Datum odjezdu musí následovat po datu příjezdu!', 'error');
-      return;
-    }
-
-    document.getElementById('submitBtndisabled = true;
-
-    const { error } = await _supabase
-      .from('reservations')
-      .insert([{
-        check_in,
-        check_out,
-        guests,
-        guest_name,
-        guest_email,
-        guest_phone,
-        total_price,
-        status: 'pending'
-      }]);
-
-    document.getElementById('submitBtn').disabled = false;
-
-    if (error) {
-      if (error.message.includes('exclusion constraint') || error.message.includes('overlapping')) {
-        showMessage('Tento termín je již bohužel obsazený!', 'error');
+    function calculatePrice() {
+      const checkIn = new Date(checkInInput.value);
+      const checkOut = new Date(checkOutInput.value);
+      if (checkInInput.value && checkOutInput.value && checkOut > checkIn) {
+        const nights = Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+        const total = nights * PRICE_PER_NIGHT;
+        totalPriceEl.innerText = total.toLocaleString('cs-CZ') + ' Kč (' + nights + ' ' + (nights === 1 ? 'noc' : (nights < 5 ? 'noci' : 'nocí')) + ')';
+        return total;
       } else {
-        showMessage('Chyba při odesílání: ' + error.message, 'error');
+        totalPriceEl.innerText = '0 Kč';
+        return 0;
       }
-    } else {
-      showMessage('Děkujeme! Vaše rezervace byla úspěšně odeslána.', 'success');
-      document.getElementById('bookingForm').reset();
-      totalPriceEl.innerText = '0 Kč';
     }
-  });
 
-  function showMessage(text, type) {
-    messageDiv.innerText = text;
-    messageDiv.className = type;
-    messageDiv.style.display = 'block';
-  }
-</script>
+    checkInInput.addEventListener('change', calculatePrice);
+    checkOutInput.addEventListener('change', calculatePrice);
 
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.innerText = text;
+      msg.className = type;
+      msg.style.display = 'block';
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const total_price = calculatePrice();
+      if (total_price <= 0) {
+        showMessage('Datum odjezdu musí následovat po datu příjezdu!', 'error');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Odesílá se...';
+
+      const check_in = checkInInput.value;
+      const check_out = checkOutInput.value;
+      const guests = parseInt(document.getElementById('guests').value);
+      const guest_name = document.getElementById('guest_name').value;
+      const guest_email = document.getElementById('guest_email').value;
+      const guest_phone = document.getElementById('guest_phone').value;
+
+      const { error } = await _supabase
+        .from('reservations')
+        .insert([{ check_in, check_out, guests, guest_name, guest_email, guest_phone, total_price }]);
+
+      submitBtn.disabled = false;
+      submitBtn.innerText = 'Odeslat závaznou poptávku';
+
+      if (error) {
+        if (error.message.includes('exclusion constraint') || error.message.includes('overlapping')) {
+          showMessage('Tento termín je již bohužel obsazený!', 'error');
+        } else {
+          showMessage('Chyba při odesílání: ' + error.message, 'error');
+        }
+      } else {
+        showMessage('Děkujeme! Vaše rezervace byla úspěšně odeslána.', 'success');
+        document.getElementById('bookingForm').reset();
+        totalPriceEl.innerText = '0 Kč';
+      }
+    });
+  </script>
 </body>
 </html>
