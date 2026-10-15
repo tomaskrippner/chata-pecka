@@ -3,31 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chata Pecka - Rezervace pobytu</title>
+  <title>Chata Pecka - Ubytování v přírodě</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
-    .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+    :root {
+      --primary: #2e7d32;
+      --primary-dark: #1b5e20;
+      --bg-light: #f4f7f6;
+      --text-color: #333;
+    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-light); margin: 0; padding: 0; color: var(--text-color); line-height: 1.6; }
+    
+    /* Hlavička / Hero */
+    .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('chata1.jpg') center/cover no-repeat; color: white; text-align: center; padding: 80px 20px; }
+    .hero h1 { font-size: 3rem; margin: 0 0 10px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    .hero p { font-size: 1.2rem; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+
+    .container { max-width: 900px; margin: -40px auto 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; }
+    
+    /* Galerie */
+    .section-title { color: #2c3e50; border-bottom: 2px solid #eaeaea; padding-bottom: 8px; margin-top: 30px; margin-bottom: 20px; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 40px; }
+    .gallery img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.2s; }
+    .gallery img:hover { transform: scale(1.02); }
+
+    /* Formulář */
     .form-group { margin-bottom: 18px; }
-    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; color: #444; }
     input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"] {
-      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px;
+      width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px;
     }
     .price-box { background: #eef9f5; border: 1px solid #c2ebd9; padding: 15px; border-radius: 6px; text-align: center; margin: 20px 0; }
-    .price-amount { font-size: 24px; font-weight: bold; color: #2e7d32; }
-    button { width: 100%; background-color: #2e7d32; color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-    button:hover { background-color: #1b5e20; }
+    .price-amount { font-size: 26px; font-weight: bold; color: var(--primary); }
+    
+    button { width: 100%; background-color: var(--primary); color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+    button:hover { background-color: var(--primary-dark); }
+    
     #message { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; text-align: center; font-weight: 600; }
     .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
     .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+    footer { text-align: center; padding: 20px; color: #777; font-size: 0.9rem; }
   </style>
 </head>
 <body>
 
-<div class="container">
+<div class="hero">
   <h1>Chata Pecka</h1>
-  <p style="text-align: center; color: #666;">Vyberte si termín a pošlete žádost o rezervaci.</p>
+  <p>Klidné ubytování v lůně nádherné přírody</p>
+</div>
+
+<div class="container">
+  
+  <!-- O chatě -->
+  <h2 class="section-title">O našem ubytování</h2>
+  <p>Užijte si nezapomenutelný pobyt na Chate Pecka. Chata se nachází v krásném a klidném prostředí obklopeném pastvinami a lesy, ideální pro milovníky přírody, klidu a pohody.</p>
+
+  <!-- Fotogalerie -->
+  <h2 class="section-title">Fotogalerie</h2>
+  <div class="gallery">
+    <img src="IMG_5687.jpg" alt="Chata Pecka exteriér">
+    <img src="IMG_5673.jpg" alt="Pohled na terasu">
+    <img src="IMG_5676.jpg" alt="Okolní příroda">
+    <img src="dji_fly_20260615_172150_337_1781537871513_photo_optimized.jpg alt="Okolí a zvířata">
+  </div>
+
+  <!-- Rezervační formulář -->
+  <h2 class="section-title">Rezervace pobytu</h2>
+  <p>Vyberte si svůj termín a odešlete nezávaznou poptávku.</p>
 
   <form id="bookingForm">
     <div class="form-group">
@@ -70,6 +113,10 @@
 
   <div id="message"></div>
 </div>
+
+<footer>
+  &copy; 2026 Chata Pecka. Všechna práva vyhrazena.
+</footer>
 
 <script>
   const SUPABASE_URL = 'https://mgtwqvovodlvekdboale.supabase.co';
@@ -116,7 +163,7 @@
     const check_out = checkOutInput.value;
     const guests = parseInt(document.getElementById('guests').value);
     const guest_name = document.getElementById('guest_name').value;
-    const guest_email = document.getElementById('guest_email'].value;
+    const guest_email = document.getElementById('guest_email').value;
     const guest_phone = document.getElementById('guest_phone').value;
     const total_price = calculatePrice();
 
