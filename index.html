@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chata Pecka | Luxusní ubytování v přírodě</title>
+  <title>Chata Pecka | Luxusní ubytování v CHKO</title>
   
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -19,6 +19,7 @@
       --text: #1e293b;
       --gray-light: #f8fafc;
       --border: #e2e8f0;
+      --gold: #d97706;
     }
     
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -32,18 +33,19 @@
 
     /* Hero sekce */
     .hero {
-      background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), url('IMG_5687.jpeg') center/cover no-repeat;
+      background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.65)), url('IMG_5687.jpeg') center/cover no-repeat;
       color: white;
       text-align: center;
-      padding: 120px 20px 160px 20px;
+      padding: 160px 20px 200px 20px;
+      position: relative;
     }
-    .hero h1 { font-size: 3.2rem; font-weight: 700; margin-bottom: 15px; letter-spacing: -0.5px; }
-    .hero p { font-size: 1.25rem; font-weight: 400; max-width: 600px; margin: 0 auto; opacity: 0.95; }
+    .hero h1 { font-size: 3.8rem; font-weight: 700; margin-bottom: 15px; letter-spacing: -1px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+    .hero p { font-size: 1.35rem; font-weight: 300; max-width: 650px; margin: 0 auto; opacity: 0.95; }
 
     /* Hlavní kontejner */
     .wrapper {
-      max-width: 1000px;
-      margin: -80px auto 60px auto;
+      max-width: 1050px;
+      margin: -100px auto 60px auto;
       padding: 0 20px;
       position: relative;
       z-index: 10;
@@ -51,73 +53,134 @@
 
     .card {
       background: #fff;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      margin-bottom: 30px;
+      padding: 50px;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
     }
 
-    h2 { font-size: 1.8rem; color: #0f172a; margin-bottom: 20px; font-weight: 700; }
-    p.lead { font-size: 1.1rem; color: #475569; margin-bottom: 30px; }
+    h2 { font-size: 2.2rem; color: #0f172a; margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 12px; }
+    h3 { font-size: 1.4rem; color: #1e293b; margin-bottom: 15px; font-weight: 600; }
+    p.lead { font-size: 1.15rem; color: #475569; margin-bottom: 30px; line-height: 1.8; }
 
     /* Vybavení - karty */
     .features {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
       margin-bottom: 40px;
     }
     .feature-item {
       background: var(--accent);
-      padding: 20px;
-      border-radius: 12px;
+      padding: 24px;
+      border-radius: 16px;
       border: 1px solid #bbf7d0;
       text-align: center;
       font-weight: 600;
       color: var(--primary-dark);
+      transition: transform 0.2s;
     }
+    .feature-item:hover { transform: translateY(-3px); }
 
-    /* Lokalita box */
-    .location-box {
-      background: #f8fafc;
-      border-left: 4px solid var(--primary);
-      padding: 20px;
-      border-radius: 0 12px 12px 0;
+    /* Ceník mřížka */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
       margin-bottom: 40px;
-      font-size: 1.05rem;
-      color: #334155;
     }
-    .location-box p { margin-bottom: 10px; }
-    .location-box p:last-child { margin-bottom: 0; }
-    .coords {
-      display: inline-block;
-      background: #e2e8f0;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 0.95rem;
-      color: #0f172a;
+    .price-card {
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .price-card.featured {
+      border-color: var(--primary);
+      background: #f0fdf4;
+      position: relative;
+    }
+    .price-card h4 { font-size: 1.2rem; color: #334155; margin-bottom: 10px; }
+    .price-card .amount { font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
+    .price-card ul { list-style: none; text-align: left; color: #64748b; font-size: 0.95rem; margin-bottom: 20px; }
+    .price-card ul li { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+    /* Kalendář obsazenosti */
+    .calendar-section {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      border: 1px solid var(--border);
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+    .calendar-day-name {
       font-weight: 600;
+      font-size: 0.9rem;
+      color: #64748b;
+      padding-bottom: 10px;
     }
+    .calendar-day {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .calendar-day.booked {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fecaca;
+      text-decoration: line-through;
+    }
+    .calendar-day.available {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #bbf7d0;
+    }
+    .calendar-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      justify-content: center;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-color { width: 14px; height: 14px; border-radius: 4px; }
 
     /* Fotogalerie */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
       margin-bottom: 40px;
     }
     .gallery img {
       width: 100%;
-      height: 180px;
+      height: 200px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
     .gallery img:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.12);
     }
 
     /* Formulář */
@@ -143,7 +206,7 @@
       width: 100%;
       padding: 14px 16px;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 1rem;
       font-family: inherit;
       background: #fcfcfc;
@@ -153,20 +216,20 @@
       outline: none;
       border-color: var(--primary);
       background: #fff;
-      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1);
     }
 
-    /* Cena */
+    /* Cena box */
     .price-box {
       background: var(--accent);
       border: 1px solid #bbf7d0;
-      padding: 20px;
-      border-radius: 12px;
+      padding: 24px;
+      border-radius: 16px;
       text-align: center;
       margin: 30px 0;
     }
-    .price-label { font-size: 0.95rem; color: #166534; font-weight: 500; }
-    .price-amount { font-size: 2.2rem; font-weight: 700; color: var(--primary-dark); margin-top: 5px; }
+    .price-label { font-size: 1rem; color: #166534; font-weight: 500; }
+    .price-amount { font-size: 2.6rem; font-weight: 700; color: var(--primary-dark); margin-top: 5px; }
 
     /* Tlačítko */
     button {
@@ -174,12 +237,13 @@
       background-color: var(--primary);
       color: white;
       border: none;
-      padding: 16px;
-      font-size: 1.05rem;
+      padding: 18px;
+      font-size: 1.1rem;
       font-weight: 700;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
     }
     button:hover { background-color: var(--primary-dark); }
     button:active { transform: scale(0.99); }
@@ -188,7 +252,7 @@
     #message {
       margin-top: 20px;
       padding: 16px;
-      border-radius: 10px;
+      border-radius: 12px;
       display: none;
       text-align: center;
       font-weight: 600;
@@ -198,14 +262,15 @@
 
     footer {
       text-align: center;
-      padding: 30px;
+      padding: 40px;
       color: #64748b;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     @media(max-width: 768px) {
       .form-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 2.3rem; }
+      .hero h1 { font-size: 2.5rem; }
+      .card { padding: 25px; }
     }
   </style>
 </head>
@@ -214,7 +279,7 @@
   <!-- Hero sekce -->
   <div class="hero">
     <h1>Chata Pecka</h1>
-    <p>Váš dokonalý únik do klidu panenské přírody plné pohody a komfortu.</p>
+    <p>Exkluzivní ubytování v chráněné krajinné oblasti pro náročné milovníky přírody a klidu.</p>
   </div>
 
   <!-- Hlavní obal obsahu -->
@@ -222,25 +287,100 @@
     <div class="card">
       
       <!-- O ubytování -->
-      <h2>O ubytování</h2>
-      <p class="lead">Zažijte nezapomenutelný pobyt v srdci přírody. Chata Pecka nabízí kompletní zázemí pro rodiny i skupiny přátel, kteří hledají odpočinek, turistiku a soukromí obklopené pastvinami a lesy.</p>
+      <h2>🏡 O ubytování</h2>
+      <p class="lead">Zažijte nezapomenutelný pobyt v hluboké přírodě. Chata Pecka je citlivě zasazena do nádherné scenérie chráněné krajinné oblasti. Nabízí maximální soukromí, špičkový komfort, hřejivou atmosféru dřevěného interiéru a dokonalý únik od každodenního stresu.</p>
       
       <div class="features">
-        <div class="feature-item">🌲 Klidná lokalita</div>
-        <div class="feature-item">🛏️ Moderní vybavení</div>
-        <div class="feature-item">🔥 Venkovní posezení</div>
-        <div class="feature-item">🚗 Parkování u chaty</div>
+        <div class="feature-item">🌲 Srdce CHKO</div>
+        <div class="feature-item">🛏️ Prémiový interiér</div>
+        <div class="feature-item">🔥 Venkovní ohniště a gril</div>
+        <div class="feature-item">🚗 Soukromé parkování</div>
       </div>
 
-      <!-- Sekce lokalita -->
-      <h2>Lokalita a okolí</h2>
-      <div class="location-box">
-        <p>🌲 <strong>Chráněná krajinná oblast:</strong> Chata se nachází v naprostém klidu přímé přírody chráněné krajinné oblasti, daleko od městského ruchu, ideální pro pěší turisty, cyklisty a milovníky čistého vzduchu.</p>
-        <p>📍 <strong>GPS souřadnice:</strong> <span class="coords">48.80102° S, 13.93219° V</span></p>
+      <!-- Ceník -->
+      <h2>💰 Ceník pobytů</h2>
+      <p class="lead">Vyberte si variantu pobytu, která vám nejlépe vyhovuje. Ceny jsou konečné včetně vybavení.</p>
+      
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h4>Víkendový pobyt</h4>
+          <div class="amount">5 500 Kč</div>
+          <ul>
+            <li>✅ 2 noci (Pátek – Neděle)</li>
+            <li>✅ Ideální pro víkendový relax</li>
+            <li>✅ Všechny poplatky v ceně</li>
+          </ul>
+        </div>
+
+        <div class="price-card featured">
+          <h4>Týdenní pobyt</h4>
+          <div class="amount">16 500 Kč</div>
+          <ul>
+            <li>⭐ 7 nocí (Sobota – Sobota)</li>
+            <li>⭐ Nejvýhodnější poměr cena/noc</li>
+            <li>⭐ Kompletní zázemí chaty</li>
+          </ul>
+        </div>
+
+        <div class="price-card">
+          <h4>Individuální noc</h4>
+          <div class="amount">2 500 Kč</div>
+          <ul>
+            <li>✨ Cena za 1 noc</li>
+            <li>✨ Minimálně 2 noci</li>
+            <li>✨ Flexibilní termíny</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interaktivní kalendář / Obsazenost -->
+      <h2>📅 Přehled obsazenosti</h2>
+      <p class="lead">Zde se můžete podívat na aktuální stav obsazených termínů pro nadcházející období.</p>
+      
+      <div class="calendar-section">
+        <div class="calendar-header">
+          <h3 id="currentMonthYear" style="margin:0;">Červen 2026</h3>
+          <span style="font-size: 0.9rem; color: #64748b;">Aktualizováno živě</span>
+        </div>
+        <div class="calendar-grid">
+          <div class="calendar-day-name">Po</div>
+          <div class="calendar-day-name">Út</div>
+          <div class="calendar-day-name">St</div>
+          <div class="calendar-day-name">Čt</div>
+          <div class="calendar-day-name">Pá</div>
+          <div class="calendar-day-name">So</div>
+          <div class="calendar-day-name">Ne</div>
+          <!-- Ukázka mřížky dnů v měsíci -->
+          <div class="calendar-day available">1</div>
+          <div class="calendar-day available">2</div>
+          <div class="calendar-day available">3</div>
+          <div class="calendar-day available">4</div>
+          <div class="calendar-day booked">5</div>
+          <div class="calendar-day booked">6</div>
+          <div class="calendar-day booked">7</div>
+          <div class="calendar-day available">8</div>
+          <div class="calendar-day available">9</div>
+          <div class="calendar-day available">10</div>
+          <div class="calendar-day available">11</div>
+          <div class="calendar-day available">12</div>
+          <div class="calendar-day available">13</div>
+          <div class="calendar-day available">14</div>
+          <div class="calendar-day available">15</div>
+          <div class="calendar-day available">16</div>
+          <div class="calendar-day available">17</div>
+          <div class="calendar-day available">18</div>
+          <div class="calendar-day available">19</div>
+          <div class="calendar-day available">20</div>
+          <div class="calendar-day available">21</div>
+        </div>
+        <div class="calendar-legend">
+          <div class="legend-item"><div class="legend-color" style="background: #dcfce7; border: 1px solid #bbf7d0;"></div> Volno</div>
+          <div class="legend-item"><div class="legend-color" style="background: #fee2e2; border: 1px solid #fecaca;"></div> Obsazeno</div>
+        </div>
       </div>
 
       <!-- Fotogalerie -->
-      <h2>Fotogalerie</h2>
+      <h2>📸 Fotogalerie</h2>
       <div class="gallery">
         <img src="IMG_5649.jpeg" alt="Chata Pecka interiér">
         <img src="IMG_5651.jpeg" alt="Detail vybavení">
@@ -251,8 +391,8 @@
       </div>
 
       <!-- Rezervační formulář -->
-      <h2>Rezervace pobytu</h2>
-      <p class="lead">Zvolte si termín vašeho pobytu a vyplňte kontaktní údaje. Rezervace je nezávazná.</p>
+      <h2>✍️ Rezervace pobytu</h2>
+      <p class="lead">Zvolte si termín vašeho pobytu a vyplňte kontaktní údaje. Odešlete nezávaznou poptávku a my se vám ozveme.</p>
       
       <form id="bookingForm">
         <div class="form-grid">
@@ -295,7 +435,7 @@
   </div>
 
   <footer>
-    &copy; 2026 Chata Pecka. Všechna práva vyhrazena.
+    &copy; 2026 Chata Pecka. Všechna práva vyhrazena. | Ubytování v chráněné krajinné oblasti.
   </footer>
 
   <!-- JavaScript pro výpočet ceny a Supabase -->
