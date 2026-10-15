@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chata Pecka - Rezervace pobytu</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h1 { text-align: center; color: #2c3e50; margin-bottom: 20px; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"] {
+      width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px;
+    }
+    .price-box { background: #eef9f5; border: 1px solid #c2ebd9; padding: 15px; border-radius: 6px; text-align: center; margin: 20px 0; }
+    .price-amount { font-size: 24px; font-weight: bold; color: #2e7d32; }
+    button { width: 100%; background-color: #2e7d32; color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+    button:hover { background-color: #1b5e20; }
+    #message { margin-top: 15px; padding: 12px; border-radius: 6px; display: none; text-align: center; font-weight: 600; }
+    .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Chata Pecka</h1>
+  <p style="text-align: center; color: #666;">Vyberte si termín a pošlete žádost o rezervaci.</p>
+
+  <form id="bookingForm">
+    <div class="form-group">
+      <label for="check_in">Příjezd (Check-in):</label>
+      <input type="date" id="check_in" required>
+    </div>
+
+    <div class="form-group">
+      <label for="check_out">Odjezd (Check-out):</label>
+      <input type="date" id="check_out" required>
+    </div>
+
+    <div class="form-group">
+      <label for="guests">Počet hostů:</label>
+      <input type="number" id="guests" min="1" max="10" value="2" required>
+    </div>
+
+    <div class="form-group">
+      <label for="guest_name">Jméno a příjmení:</label>
+      <input type="text" id="guest_name" placeholder="Jan Novák" required>
+    </div>
+
+    <div class="form-group">
+      <label for="guest_email">E-mail:</label>
+      <input type="email" id="guest_email" placeholder="jan@novak.cz" required>
+    </div>
+
+    <div class="form-group">
+      <label for="guest_phone">Telefon:</label>
+      <input type="tel" id="guest_phone" placeholder="+420 777 888 999" required>
+    </div>
+
+    <div class="price-box">
+      <div>Odhadovaná cena pobytu:</div>
+      <div class="price-amount" id="totalPrice">0 Kč</div>
+    </div>
+
+    <button type="submit" id="submitBtn">Odeslat rezervaci</button>
+  </form>
+
+  <div id="message"></div>
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://mgtwqvovodlvekdboale.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_rwgkmX0f2MzyHIicrUyVyw_UQV6ke4d';
+
+  const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const PRICE_PER_NIGHT = 2000;
+
+  const checkInInput = document.getElementById('check_in');
+  const checkOutInput = document.getElementById('check_out');
+  const totalPriceEl = document.getElementById('totalPrice');
+  const messageDiv = document.getElementById('message');
+
+  const today = new Date().toISOString().split('T')[0];
+  checkInInput.min = today;
+  checkOutInput.min = today;
+
+  function calculatePrice() {
+    const checkIn = new Date(checkInInput.value);
+    const checkOut = new Date(checkOutInput.value);
+
+    if (checkInInput.value && checkOutInput.value && checkOut > checkIn) {
+      const nights = (checkOut - checkIn) / (1000 * 60 * 60 * 24);
+      const total = nights * PRICE_PER_NIGHT;
+      totalPriceEl.innerText = total.toLocaleString('cs-CZ') + ' Kč (' + nights + ' nocí)';
+      return total;
+    } else {
+      totalPriceEl.innerText = '0 Kč';
+      return 0;
+    }
+  }
+
+  checkInInput.addEventListener('change', () => {
+    checkOutInput.min = checkInInput.value;
+    calculatePrice();
+  });
+  checkOutInput.addEventListener('change', calculatePrice);
+
+  document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    messageDiv.style.display = 'none';
+
+    const check_in = checkInInput.value;
+    const check_out = checkOutInput.value;
+    const guests = parseInt(document.getElementById('guests').value);
+    const guest_name = document.getElementById('guest_name').value;
+    const guest_email = document.getElementById('guest_email'].value;
+    const guest_phone = document.getElementById('guest_phone').value;
+    const total_price = calculatePrice();
+
+    if (total_price <= 0) {
+      showMessage('Datum odjezdu musí být až po datu příjezdu!', 'error');
+      return;
+    }
+
+    document.getElementById('submitBtn').disabled = true;
+
+    const { data, error } = await _supabase
+      .from('reservations')
+      .insert([{
+        check_in,
+        check_out,
+        guests,
+        guest_name,
+        guest_email,
+        guest_phone,
+        total_price,
+        status: 'pending'
+      }]);
+
+    document.getElementById('submitBtn').disabled = false;
+
+    if (error) {
+      if (error.message.includes('exclusion constraint') || error.message.includes('overlapping')) {
+        showMessage('Tento termín je již bohužel obsazený!', 'error');
+      } else {
+        showMessage('Chyba: ' + error.message, 'error');
+      }
+    } else {
+      showMessage('Děkujeme! Vaše rezervace byla úspěšně odeslána.', 'success');
+      document.getElementById('bookingForm').reset();
+      totalPriceEl.innerText = '0 Kč';
+    }
+  });
+
+  function showMessage(text, type) {
+    messageDiv.innerText = text;
+    messageDiv.className = type;
+    messageDiv.style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
