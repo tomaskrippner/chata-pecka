@@ -4,284 +4,219 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Chata Pecka u Nové Pece | Prémiové ubytování v CHKO Šumava</title>
-  <meta name="description" content="Celoroční pronájem prostorné chaty pro až 10 osob u Nové Pece v CHKO Šumava. Vnitřní krb, ohniště, Wi-Fi, parkování. Přímo u cyklostezky a blízko Hochfichtu.">
-  <meta name="keywords" content="Chata Pecka, Nová Pec, CHKO Šumava, Lipno, Hochficht, cyklostezka Stožec, ubytování Šumava">
+  <title>Chata Pecka | Luxusní ubytování Nová Pec, CHKO Šumava</title>
+  <meta name="description" content="Prémiový celoroční pronájem chaty pro až 10 osob v srdci Šumavy. Krb, ohniště, cyklostezky, lyžování na Hochfichtu. Rezervujte online.">
   
-  <!-- Open Graph -->
-  <meta property="og:title" content="Chata Pecka u Nové Pece | Šumavské útočiště">
-  <meta property="og:description" content="Komfortní pobyt pro až 10 osob v CHKO Šumava. Rezervujte si svůj termín online.">
-  <meta property="og:image" content="IMG_5687.jpeg">
-  <meta property="og:type" content="website">
-
+  <!-- Fonty pro prémiový vzhled -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
+    /* =========================================
+       1. PROMĚNNÉ & ZÁKLADNÍ NASTAVENÍ (PREMIUM)
+       ========================================= */
     :root {
-      /* Teplá severská barevná paleta */
-      --bg-cream: #FAF7F2;          /* Hřejivá krémová/slonová kost */
-      --card-white: #FFFFFF;        /* Čistá bílá */
-      --forest-dark: #1A3026;       /* Hluboká lesní zeleň */
-      --pine-green: #0F766E;        /* Smrková šalvějová */
-      --pine-hover: #134E4A;
-      --wood-gold: #C29B38;         /* Teplé dřevo / jemný akcent */
-      --text-main: #1C2421;         /* Měkká černá pro skvělou čitelnost */
-      --text-muted: #5E6963;        /* Elegantní zemitá šedozelená */
-      --border-warm: #EAE4D9;       /* Jemný krémový rámeček */
-      --danger-bg: #FEE2E2;
-      --danger-border: #FCA5A5;
-      --danger-text: #991B1B;
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow-soft: 0 10px 30px -5px rgba(26, 48, 38, 0.05);
-      --shadow-lift: 0 20px 35px -8px rgba(26, 48, 38, 0.12);
+      /* Barvy */
+      --bg-body: #FDFBF7;        /* Velmi světlá krémová/slonová kost */
+      --bg-card: #FFFFFF;        /* Čistá bílá pro karty */
+      --bg-alt: #F4F1EA;         /* Tmavší krémová pro jemný kontrast */
+      
+      --primary: #1A3628;        /* Hluboká lesní zelená */
+      --primary-hover: #12261C;
+      --primary-light: #E8F0EB;  /* Velmi světlý nádech zelené */
+      
+      --accent: #D4A373;         /* Teplé dřevo / Zlato */
+      --accent-hover: #BC8D5E;
+      
+      --text-main: #2B302D;      /* Tmavá, ale ne absolutně černá */
+      --text-muted: #6B726F;     /* Elegantní šedozelená */
+      
+      --border: #E8E4DB;         /* Jemné krémové linky */
+      --danger: #E63946;         /* Zvýraznění obsazených dnů */
+      --danger-light: #FCE8EA;
+      
+      /* Rozměry a stíny */
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 28px;
+      --shadow-sm: 0 4px 14px rgba(26, 54, 40, 0.04);
+      --shadow-md: 0 16px 36px rgba(26, 54, 40, 0.08);
+      --shadow-floating: 0 24px 48px rgba(26, 54, 40, 0.12);
+      
+      --max-width: 1200px;
     }
 
-    html { scroll-behavior: smooth; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    html { scroll-behavior: smooth; }
+    
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-cream);
+      background-color: var(--bg-body);
       color: var(--text-main);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Hlavička & Navigace */
+    /* Typografie */
+    h1, h2, h3 { color: var(--primary); letter-spacing: -0.5px; }
+    .serif { font-family: 'Playfair Display', serif; }
+    
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* =========================================
+       2. NAVIGACE & HLAVIČKA
+       ========================================= */
     header {
-      background: rgba(250, 247, 242, 0.94);
-      backdrop-filter: blur(14px);
+      background: rgba(253, 251, 247, 0.9);
+      backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
-      z-index: 100;
-      border-bottom: 1px solid var(--border-warm);
-      padding: 16px 24px;
+      z-index: 999;
+      border-bottom: 1px solid rgba(232, 228, 219, 0.6);
+      padding: 18px 24px;
+      transition: all 0.3s ease;
     }
     .nav-container {
-      max-width: 1160px;
+      max-width: var(--max-width);
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .brand-logo {
+    .logo {
       display: flex;
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      color: var(--forest-dark);
+      color: var(--primary);
     }
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      background: var(--forest-dark);
-      color: #fff;
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--primary);
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(26, 48, 38, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
     }
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-    .brand-title {
-      font-size: 1.25rem;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      line-height: 1.1;
-    }
-    .brand-subtitle {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--wood-gold);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-    }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-    }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-title { font-size: 1.3rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; }
+    .logo-subtitle { font-size: 0.65rem; font-weight: 700; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; }
+    
+    .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links a {
       text-decoration: none;
       color: var(--text-muted);
       font-weight: 600;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--pine-green); }
+    .nav-links a:hover { color: var(--primary); }
 
-    /* Hero Banner */
-    .hero-container {
-      max-width: 1160px;
-      margin: 24px auto 0 auto;
+    /* =========================================
+       3. HERO SEKCE S VYSKAKUJÍCÍM BAREM
+       ========================================= */
+    .hero {
+      max-width: 1300px;
+      margin: 20px auto 0 auto;
       padding: 0 20px;
     }
     .hero-banner {
-      background: linear-gradient(rgba(26, 48, 38, 0.35), rgba(26, 48, 38, 0.65)), url('IMG_5687.jpeg') center/cover no-repeat;
-      height: 500px;
-      border-radius: var(--radius-xl);
+      background: linear-gradient(rgba(26, 54, 40, 0.25), rgba(26, 54, 40, 0.7)), url('IMG_5687.jpeg') center/cover no-repeat;
+      height: 560px;
+      border-radius: var(--radius-lg);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       color: #ffffff;
-      padding: 40px 24px;
-      box-shadow: var(--shadow-lift);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 40px 20px;
+      box-shadow: var(--shadow-floating);
     }
     .hero-banner h1 {
-      font-size: clamp(2.3rem, 5vw, 3.8rem);
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 14px;
-      text-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+      text-shadow: 0 10px 20px rgba(0,0,0,0.4);
     }
     .hero-banner p {
-      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      font-size: clamp(1.1rem, 2vw, 1.3rem);
       font-weight: 400;
-      max-width: 660px;
+      max-width: 680px;
       opacity: 0.95;
     }
 
-    /* Rychlá rezervační lišta */
-    .booking-bar {
-      background: var(--card-white);
-      border-radius: var(--radius-lg);
-      padding: 22px 30px;
-      margin: -50px auto 44px auto;
-      max-width: 1000px;
-      box-shadow: var(--shadow-lift);
-      border: 1px solid var(--border-warm);
+    /* Rychlá rezervace přesahující fotku */
+    .quick-book {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 24px 32px;
+      margin: -60px auto 50px auto;
+      max-width: 900px;
+      box-shadow: var(--shadow-floating);
+      border: 1px solid var(--border);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
-      gap: 18px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 16px;
+      align-items: end;
       position: relative;
       z-index: 10;
     }
-    .bar-field { display: flex; flex-direction: column; }
-    .bar-field label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      margin-bottom: 6px;
+    .input-group { display: flex; flex-direction: column; text-align: left; }
+    .input-group label {
+      font-size: 0.75rem; font-weight: 800; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
     }
-    .bar-field input, .bar-field select {
-      border: 1px solid var(--border-warm);
-      padding: 12px 14px;
-      border-radius: var(--radius-md);
-      font-size: 0.95rem;
-      font-family: inherit;
-      color: var(--text-main);
-      background: #FAF9F6;
+    .input-group input, .input-group select {
+      border: 1px solid var(--border);
+      background: var(--bg-body);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      font-family: inherit; font-size: 1rem; color: var(--text-main); font-weight: 500;
+      outline: none; transition: border 0.2s;
     }
+    .input-group input:focus, .input-group select:focus { border-color: var(--primary); background: #fff; }
+    
     .btn-primary {
-      background: var(--forest-dark);
-      color: #ffffff;
+      background: var(--primary);
+      color: #fff;
       border: none;
-      padding: 14px 30px;
-      border-radius: var(--radius-md);
+      padding: 16px 32px;
+      border-radius: var(--radius-sm);
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1rem;
       cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 14px rgba(26, 48, 38, 0.25);
+      transition: all 0.3s ease;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 52px;
     }
     .btn-primary:hover {
-      background: var(--pine-green);
+      background: var(--accent);
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(15, 118, 110, 0.35);
+      box-shadow: 0 8px 20px rgba(212, 163, 115, 0.3);
     }
 
-    /* Kontejner */
-    .main-container {
-      max-width: 1160px;
+    /* =========================================
+       4. OBECNÉ KARTY SEKCE
+       ========================================= */
+    .container {
+      max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 20px 80px 20px;
     }
-
-    .section-head { text-align: center; margin-bottom: 38px; }
-    .section-tag {
-      font-size: 0.75rem;
-      font-weight: 800;
-      color: var(--wood-gold);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .section-head h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--forest-dark);
-      margin-bottom: 10px;
-      letter-spacing: -0.5px;
-    }
-    .section-head p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 620px;
-      margin: 0 auto;
-    }
-
-    .section-card {
-      background: var(--card-white);
-      border-radius: var(--radius-xl);
-      padding: 44px;
-      border: 1px solid var(--border-warm);
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 40px;
-    }
-
-    /* Grid vybavení */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-    }
-    .feature-item {
-      background: #FAF9F6;
-      padding: 26px 20px;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-warm);
-      transition: all 0.25s ease;
-    }
-    .feature-item:hover {
-      transform: translateY(-4px);
-      border-color: var(--pine-green);
-      box-shadow: var(--shadow-soft);
-    }
-    .feature-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
-    .feature-title { font-weight: 700; font-size: 1.05rem; color: var(--forest-dark); margin-bottom: 4px; }
-    .feature-desc { font-size: 0.9rem; color: var(--text-muted); }
-
-    /* Sezóny */
-    .season-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-    .tab-btn {
-      padding: 12px 26px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-warm);
-      background: #FAF9F6;
-      font-weight: 700;
-      font-size
+    .section-wrapper {
+      background: var(--bg-
