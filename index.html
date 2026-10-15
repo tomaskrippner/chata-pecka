@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO Meta Tagy -->
-  <title>Chata Pecka u Nové Pece | Ubytování CHKO Šumava & Lipno</title>
-  <meta name="description" content="Pronájem prostorné chaty pro až 10 osob u Nové Pece v CHKO Šumava. Vnitřní krb, venkovní ohniště, Wi-Fi, parkování. Ideální pro cyklisty a rodiny.">
-  <meta name="keywords" content="Chata Pecka, Nová Pec, ubytování Šumava, CHKO Šumava, pronájem chaty Lipno, chata pro cyklisty, cyklostezka Stožec">
+  <title>Chata Pecka u Nové Pece | Ubytování CHKO Šumava, Lipno & Hochficht</title>
+  <meta name="description" content="Celoroční pronájem prostorné chaty pro až 10 osob u Nové Pece v CHKO Šumava. Vnitřní krb, venkovní ohniště, Wi-Fi, parkování. V létě cyklistika, v zimě Hochficht a běžky.">
+  <meta name="keywords" content="Chata Pecka, Nová Pec, ubytování Šumava, CHKO Šumava, pronájem chaty Lipno, Hochficht lyžování, cyklostezka Stožec">
   
   <!-- Open Graph pro sociální sítě -->
-  <meta property="og:title" content="Chata Pecka u Nové Pece | Ubytování v srdci Šumavy">
-  <meta property="og:description" content="Luxusní útočiště v CHKO Šumava pro až 10 osob s krbem, ohništěm a přímým napojením na cyklostezku Nová Pec – Stožec.">
+  <meta property="og:title" content="Chata Pecka u Nové Pece | Celoroční ubytování v srdci Šumavy">
+  <meta property="og:description" content="Útočiště v CHKO Šumava pro až 10 osob s vnitřním krbem, ohništěm, cyklostezkou u domu a skvělou dostupností na Hochficht.">
   <meta property="og:image" content="IMG_5687.jpeg">
   <meta property="og:type" content="website">
 
@@ -28,6 +28,7 @@
       --primary: #0f766e;
       --primary-hover: #115e59;
       --primary-light: #f0fdf4;
+      --accent: #d97706;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --border-color: #e2e8f0;
@@ -212,7 +213,31 @@
     .feature-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
     .feature-desc { font-size: 0.9rem; color: var(--text-muted); }
 
-    /* Aktivity Grid */
+    /* Sezónní Přepínač Aktivit (Bod 5) */
+    .season-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .tab-btn {
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+    }
+
     .activities-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -226,6 +251,72 @@
     }
     .activity-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
     .activity-card p { font-size: 0.92rem; color: var(--text-muted); }
+
+    /* Interaktivní Kalendář Obsazenosti (Bod 1) */
+    .cal-wrapper {
+      background: #f8fafc;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      border: 1px solid var(--border-color);
+      margin-top: 24px;
+    }
+    .cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .cal-month-title { font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+    .cal-head-day { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); padding-bottom: 6px; }
+    .cal-day-cell {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .cal-day-cell:hover:not(.disabled):not(.booked) {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+    .cal-day-cell.booked {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fecaca;
+      cursor: not-allowed;
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+    .cal-day-cell.selected {
+      background: var(--primary) !important;
+      color: #ffffff !important;
+      border-color: var(--primary) !important;
+    }
+    .cal-day-cell.in-range {
+      background: var(--primary-light) !important;
+      border-color: #bbf7d0 !important;
+      color: var(--primary-hover) !important;
+    }
+    .cal-legend {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-box { width: 14px; height: 14px; border-radius: 4px; }
 
     /* Fotogalerie s Lightboxem */
     .gallery-grid {
@@ -243,7 +334,6 @@
     }
     .gallery-grid img:hover { transform: scale(1.03); box-shadow: var(--shadow-lg); }
 
-    /* Lightbox Modal */
     .lightbox-modal {
       display: none;
       position: fixed;
@@ -351,9 +441,10 @@
       <ul class="nav-links">
         <li><a href="#o-chate">O ubytování</a></li>
         <li><a href="#vybaveni">Vybavení</a></li>
-        <li><a href="#aktivity">Aktivity</a></li>
+        <li><a href="#aktivity">Sezónní aktivity</a></li>
         <li><a href="#galerie">Galerie</a></li>
         <li><a href="#lokalita">Lokalita & Kontakt</a></li>
+        <li><a href="#cenik">Ceník & Obsazenost</a></li>
         <li><a href="#rezervace">Rezervace</a></li>
       </ul>
     </div>
@@ -363,7 +454,7 @@
   <div class="hero-container">
     <div class="hero-banner">
       <h1>Chata Pecka u Nové Pece</h1>
-      <p>Komfortní útočiště v chráněné krajinné oblasti Šumava až pro 10 hostů.</p>
+      <p>Komfortní celoroční útočiště v chráněné krajinné oblasti Šumava až pro 10 hostů.</p>
     </div>
   </div>
 
@@ -400,7 +491,7 @@
         <p>Prostorná chata obklopená lesy a loukami nedaleko Nové Pece a Lipna.</p>
       </div>
       <p style="text-align: center; max-width: 820px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem;">
-        Chata Pecka nabízí komfortní zázemí až pro 10 osob. Zahřejte se u vnitřního krbu po celodenním výletu na kolech nebo si užijte večerní grilování u venkovního ohniště pod hvězdným nebem Šumavy.
+        Chata Pecka nabízí komfortní zázemí až pro 10 osob. Zahřejte se u vnitřního krbu po celodenním lyžování či výletu na kolech nebo si užijte večerní grilování u venkovního ohniště pod hvězdným nebem Šumavy.
       </p>
     </div>
 
@@ -408,7 +499,7 @@
     <div class="section-card" id="vybaveni">
       <div class="section-head">
         <h2>Klíčové vybavení chaty</h2>
-        <p>Vše potřebné pro vaši pohodu, relaxaci a komfortní pobyt.</p>
+        <p>Vše potřebné pro vaši pohodu, relaxaci a komfortní pobyt v každém ročním období.</p>
       </div>
 
       <div class="features-grid">
@@ -439,27 +530,34 @@
         </div>
         <div class="feature-item">
           <span class="feature-icon">🚲</span>
-          <div class="feature-title">Cyklistický ráj</div>
-          <div class="feature-desc">Přímé napojení na šumavské cyklostezky.</div>
+          <div class="feature-title">Cyklistika & Běžky</div>
+          <div class="feature-desc">Přímé napojení na šumavské stezky v léte i v zimě.</div>
         </div>
       </div>
     </div>
 
-    <!-- Aktivity v okolí -->
+    <!-- Aktivity v okolí SEZÓNNÍ (Bod 5) -->
     <div class="section-card" id="aktivity">
       <div class="section-head">
-        <h2>Tipy na aktivity u Nové Pece</h2>
-        <p>Objevte důvody, proč je naše lokalita tak oblíbená mezi cyklisty a turisté.</p>
+        <h2>Celoroční aktivity u Nové Pece</h2>
+        <p>Objevte krásy šumavské přírody v jakémkoliv ročním období.</p>
       </div>
 
-      <div class="activities-grid">
+      <!-- Přepínač sezón -->
+      <div class="season-tabs">
+        <button class="tab-btn active" onclick="switchSeason('summer')">☀️ Jaro & Léto</button>
+        <button class="tab-btn" onclick="switchSeason('winter')">❄️ Podzim & Zima</button>
+      </div>
+
+      <!-- Letní aktivity -->
+      <div id="summer-activities" class="activities-grid">
         <div class="activity-card">
           <h3>🚲 Cyklostezka Nová Pec – Stožec</h3>
           <p>Unikátní 16km hladká asfaltová stezka podél řeky Vltavy I. zónou NP Šumava. Ideální pro cyklisty, in-line bruslaře i rodiny s dětmi.</p>
         </div>
         <div class="activity-card">
-          <h3>🌊 Cyklotrasa podél Lipna</h3>
-          <p>Pohodová trasa z Nové Pece přes Horní Planou do Černé v Pošumaví s nádhernými výhledy na vodní hladinu.</p>
+          <h3>🌊 Vodní sporty & Lipno</h3>
+          <p>Pohodová cyklotrasa i pláže v okruhu pár km. Možnost splouvání Teplé Vltavy na kánoích přímo z Nové Pece.</p>
         </div>
         <div class="activity-card">
           <h3>🪵 Schwarzenberský kanál</h3>
@@ -468,6 +566,26 @@
         <div class="activity-card">
           <h3>⛰️ Plešné jezero & Hora Plechý</h3>
           <p>Magické ledovcové jezero a nejvyšší vrchol české Šumavy leží přímo nad Novou Pecí.</p>
+        </div>
+      </div>
+
+      <!-- Zimní aktivity -->
+      <div id="winter-activities" class="activities-grid" style="display: none;">
+        <div class="activity-card">
+          <h3>🎿 Skiareál Hochficht (Rakousko)</h3>
+          <p>Špičkové alpské lyžování jen cca 25 minut autem od chaty! 21 km sjezdovek, moderní kabinkové lanovky a dětský park.</p>
+        </div>
+        <div class="activity-card">
+          <h3>🎿 Běžecké stopy Nová Pec</h3>
+          <p>Upravované běžecké stopy začínají přímo v okolí Nové Pece a navazují na šumavskou magistrálu.</p>
+        </div>
+        <div class="activity-card">
+          <h3>⛸️ Bruslení na zamrzlém Lipně</h3>
+          <p>V zimě se hladina Lipna mění v nejdelší přírodní bruslařskou dráhu na světě.</p>
+        </div>
+        <div class="activity-card">
+          <h3>🔥 Pohoda u vnitřního krbu</h3>
+          <p>Po dni na sjezdovce si vychutnáte zasloužený relax u romanticky praskajícího krbu s hrnkem svařeného vína.</p>
         </div>
       </div>
     </div>
@@ -546,11 +664,11 @@
       </div>
     </div>
 
-    <!-- Ceník -->
+    <!-- Ceník a Interaktivní Kalendář (Bod 1) -->
     <div class="section-card" id="cenik">
       <div class="section-head">
-        <h2>Ceník ubytování</h2>
-        <p>Jasné cenové podmínky bez skrytých poplatků.</p>
+        <h2>Ceník & Interaktivní Kalendář</h2>
+        <p>Kliknutím do kalendáře si můžete přímo zvolit požadované datum příjezdu a odjezdu.</p>
       </div>
 
       <div class="price-info-box">
@@ -564,6 +682,25 @@
           <li>✓ Minimální délka pobytu: 2 noci</li>
           <li>✓ Maximální kapacita chaty: 10 osob</li>
         </ul>
+      </div>
+
+      <!-- Interaktivní Kalendář -->
+      <div class="cal-wrapper">
+        <div class="cal-header">
+          <button class="tab-btn" onclick="changeMonth(-1)">&lt; Předchozí</button>
+          <div class="cal-month-title" id="calMonthTitle">Říjen 2026</div>
+          <button class="tab-btn" onclick="changeMonth(1)">Následující &gt;</button>
+        </div>
+        
+        <div class="cal-grid" id="calGrid">
+          <!-- Dynamicky generované dny JS skriptem -->
+        </div>
+
+        <div class="cal-legend">
+          <div class="legend-item"><div class="legend-box" style="background:#ffffff; border:1px solid #e2e8f0;"></div> Volno</div>
+          <div class="legend-item"><div class="legend-box" style="background:#0f766e;"></div> Váš výběr</div>
+          <div class="legend-item"><div class="legend-box" style="background:#fee2e2; border:1px solid #fecaca;"></div> Obsazeno</div>
+        </div>
       </div>
     </div>
 
@@ -621,7 +758,26 @@
 
   <!-- JS Skripty -->
   <script>
-    // Lightbox fotogalerie
+    // 1. Přepínač Sezón (Bod 5)
+    function switchSeason(season) {
+      const summerGrid = document.getElementById('summer-activities');
+      const winterGrid = document.getElementById('winter-activities');
+      const btns = document.querySelectorAll('.season-tabs .tab-btn');
+
+      if (season === 'summer') {
+        summerGrid.style.display = 'grid';
+        winterGrid.style.display = 'none';
+        btns[0].classList.add('active');
+        btns[1].classList.remove('active');
+      } else {
+        summerGrid.style.display = 'none';
+        winterGrid.style.display = 'grid';
+        btns[0].classList.remove('active');
+        btns[1].classList.add('active');
+      }
+    }
+
+    // 2. Lightbox fotogalerie
     function openLightbox(src) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').style.display = 'flex';
@@ -630,7 +786,7 @@
       document.getElementById('lightbox').style.display = 'none';
     }
 
-    // Propojení horní lišty s formulářem
+    // 3. Propojení rezervační lišty a kalkulačky
     const barCheckIn = document.getElementById('bar_check_in');
     const barCheckOut = document.getElementById('bar_check_out');
     const barGuests = document.getElementById('bar_guests');
@@ -658,19 +814,132 @@
       }
     }
 
-    // Synchronizace horní rezervační lišty
-    barCheckIn.addEventListener('change', () => { checkInInput.value = barCheckIn.value; calculatePrice(); });
-    barCheckOut.addEventListener('change', () => { checkOutInput.value = barCheckOut.value; calculatePrice(); });
+    barCheckIn.addEventListener('change', () => { checkInInput.value = barCheckIn.value; calculatePrice(); renderCalendar(); });
+    barCheckOut.addEventListener('change', () => { checkOutInput.value = barCheckOut.value; calculatePrice(); renderCalendar(); });
     barGuests.addEventListener('change', () => { guestsInput.value = barGuests.value; calculatePrice(); });
 
-    checkInInput.addEventListener('change', () => { barCheckIn.value = checkInInput.value; calculatePrice(); });
-    checkOutInput.addEventListener('change', () => { barCheckOut.value = checkOutInput.value; calculatePrice(); });
+    checkInInput.addEventListener('change', () => { barCheckIn.value = checkInInput.value; calculatePrice(); renderCalendar(); });
+    checkOutInput.addEventListener('change', () => { barCheckOut.value = checkOutInput.value; calculatePrice(); renderCalendar(); });
     guestsInput.addEventListener('input', calculatePrice);
 
-    // Supabase
+    // 4. Interaktivní Kalendář Obsazenosti (Bod 1)
+    let currentCalDate = new Date();
+    let selectedStartDate = null;
+    let selectedEndDate = null;
+    let bookedRanges = []; // Zde se automaticky načtou obsazené dny ze Supabase
+
+    const monthNames = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
+
+    function changeMonth(delta) {
+      currentCalDate.setMonth(currentCalDate.getMonth() + delta);
+      renderCalendar();
+    }
+
+    function renderCalendar() {
+      const year = currentCalDate.getFullYear();
+      const month = currentCalDate.getMonth();
+      document.getElementById('calMonthTitle').innerText = monthNames[month] + " " + year;
+
+      const calGrid = document.getElementById('calGrid');
+      calGrid.innerHTML = '';
+
+      // Dny v týdnu
+      const dayHeaders = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
+      dayHeaders.forEach(d => {
+        const head = document.createElement('div');
+        head.className = 'cal-head-day';
+        head.innerText = d;
+        calGrid.appendChild(head);
+      });
+
+      const firstDayOfMonth = new Date(year, month, 1);
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      
+      // Úprava pro začátek od pondělí (0 = Po, 6 = Ne)
+      let startingDay = firstDayOfMonth.getDay() - 1;
+      if (startingDay === -1) startingDay = 6;
+
+      // Prázdné buňky před 1. dnem
+      for (let i = 0; i < startingDay; i++) {
+        const empty = document.createElement('div');
+        calGrid.appendChild(empty);
+      }
+
+      const selIn = checkInInput.value ? new Date(checkInInput.value) : null;
+      const selOut = checkOutInput.value ? new Date(checkOutInput.value) : null;
+
+      // Generování jednotlivých dnů měsíce
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cellDate = new Date(year, month, day);
+        const dateStr = cellDate.toISOString().split('T')[0];
+        
+        const cell = document.createElement('div');
+        cell.className = 'cal-day-cell';
+        cell.innerText = day;
+
+        // Kontrola obsazenosti
+        const isBooked = bookedRanges.some(r => cellDate >= new Date(r.check_in) && cellDate <= new Date(r.check_out));
+
+        if (isBooked) {
+          cell.classList.add('booked');
+        } else {
+          // Zvýraznění vybraného rozmezí
+          if (selIn && dateStr === checkInInput.value) cell.classList.add('selected');
+          if (selOut && dateStr === checkOutInput.value) cell.classList.add('selected');
+          if (selIn && selOut && cellDate > selIn && cellDate < selOut) cell.classList.add('in-range');
+
+          cell.addEventListener('click', () => handleCalDayClick(dateStr));
+        }
+
+        calGrid.appendChild(cell);
+      }
+    }
+
+    function handleCalDayClick(dateStr) {
+      if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
+        selectedStartDate = dateStr;
+        selectedEndDate = null;
+        checkInInput.value = dateStr;
+        barCheckIn.value = dateStr;
+        checkOutInput.value = '';
+        barCheckOut.value = '';
+      } else if (selectedStartDate && !selectedEndDate) {
+        if (new Date(dateStr) > new Date(selectedStartDate)) {
+          selectedEndDate = dateStr;
+          checkOutInput.value = dateStr;
+          barCheckOut.value = dateStr;
+        } else {
+          selectedStartDate = dateStr;
+          checkInInput.value = dateStr;
+          barCheckIn.value = dateStr;
+        }
+      }
+      calculatePrice();
+      renderCalendar();
+    }
+
+    // 5. Supabase Integrace (Načtení obsazených dnů + Odeslání)
     const SUPABASE_URL = 'https://tvuj-supabase-url.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_rwgkmX0f2MzyHIicrUyVyw_UQV6ke4d';
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function loadBookedDates() {
+      try {
+        const { data, error } = await _supabase
+          .from('reservations')
+          .select('check_in, check_out');
+        if (data && !error) {
+          bookedRanges = data;
+          renderCalendar();
+        }
+      } catch (err) {
+        console.log("Supabase ještě není plně konfigurván, použijí se výchozí volné dny.");
+        renderCalendar();
+      }
+    }
+
+    // Inicializace kalendáře při načtení
+    loadBookedDates();
 
     document.getElementById('bookingForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -712,6 +981,7 @@
         msg.style.color = '#166534';
         document.getElementById('bookingForm').reset();
         totalPriceEl.innerText = '0 Kč';
+        loadBookedDates();
       }
     });
   </script>
