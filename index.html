@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO Meta Tagy -->
-  <title>Chata Pecka u Nové Pece | Ubytování CHKO Šumava, Lipno & Hochficht</title>
-  <meta name="description" content="Celoroční pronájem prostorné chaty pro až 10 osob u Nové Pece v CHKO Šumava. Vnitřní krb, venkovní ohniště, Wi-Fi, parkování. V létě cyklistika, v zimě Hochficht a běžky.">
-  <meta name="keywords" content="Chata Pecka, Nová Pec, ubytování Šumava, CHKO Šumava, pronájem chaty Lipno, Hochficht lyžování, cyklostezka Stožec">
+  <title>Chata Pecka u Nové Pece | Prémiové ubytování v CHKO Šumava</title>
+  <meta name="description" content="Celoroční pronájem prostorné chaty pro až 10 osob u Nové Pece v CHKO Šumava. Vnitřní krb, ohniště, Wi-Fi, parkování. Přímo u cyklostezky a blízko Hochfichtu.">
+  <meta name="keywords" content="Chata Pecka, Nová Pec, CHKO Šumava, Lipno, Hochficht, cyklostezka Stožec, ubytování Šumava">
   
-  <!-- Open Graph pro sociální sítě -->
-  <meta property="og:title" content="Chata Pecka u Nové Pece | Celoroční ubytování v srdci Šumavy">
-  <meta property="og:description" content="Útočiště v CHKO Šumava pro až 10 osob s vnitřním krbem, ohništěm, cyklostezkou u domu a skvělou dostupností na Hochficht.">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Chata Pecka u Nové Pece | Šumavské útočiště">
+  <meta property="og:description" content="Komfortní pobyt pro až 10 osob v CHKO Šumava. Rezervujte si svůj termín online.">
   <meta property="og:image" content="IMG_5687.jpeg">
   <meta property="og:type" content="website">
 
-  <!-- Supabase Script -->
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <!-- Google Fonts: Plus Jakarta Sans -->
@@ -23,19 +22,24 @@
 
   <style>
     :root {
-      --bg-main: #f8fafc;
-      --card-bg: #ffffff;
-      --primary: #0f766e;
-      --primary-hover: #115e59;
-      --primary-light: #f0fdf4;
-      --accent: #d97706;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --border-color: #e2e8f0;
-      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
-      --radius-lg: 20px;
-      --radius-md: 14px;
+      /* Teplá severská barevná paleta */
+      --bg-cream: #FAF7F2;          /* Hřejivá krémová/slonová kost */
+      --card-white: #FFFFFF;        /* Čistá bílá */
+      --forest-dark: #1A3026;       /* Hluboká lesní zeleň */
+      --pine-green: #0F766E;        /* Smrková šalvějová */
+      --pine-hover: #134E4A;
+      --wood-gold: #C29B38;         /* Teplé dřevo / jemný akcent */
+      --text-main: #1C2421;         /* Měkká černá pro skvělou čitelnost */
+      --text-muted: #5E6963;        /* Elegantní zemitá šedozelená */
+      --border-warm: #EAE4D9;       /* Jemný krémový rámeček */
+      --danger-bg: #FEE2E2;
+      --danger-border: #FCA5A5;
+      --danger-text: #991B1B;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-soft: 0 10px 30px -5px rgba(26, 48, 38, 0.05);
+      --shadow-lift: 0 20px 35px -8px rgba(26, 48, 38, 0.12);
     }
 
     html { scroll-behavior: smooth; }
@@ -43,98 +47,124 @@
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-main);
+      background-color: var(--bg-cream);
       color: var(--text-main);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Sticky Navigace */
+    /* Hlavička & Navigace */
     header {
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(250, 247, 242, 0.94);
+      backdrop-filter: blur(14px);
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-warm);
       padding: 16px 24px;
     }
     .nav-container {
-      max-width: 1140px;
+      max-width: 1160px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .logo {
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--primary);
-      text-decoration: none;
+    .brand-logo {
       display: flex;
       align-items: center;
-      gap: 8px;
-      letter-spacing: -0.5px;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--forest-dark);
+    }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--forest-dark);
+      color: #fff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(26, 48, 38, 0.2);
+    }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .brand-subtitle {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--wood-gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
     .nav-links {
       display: flex;
-      gap: 22px;
+      gap: 24px;
       list-style: none;
     }
     .nav-links a {
       text-decoration: none;
       color: var(--text-muted);
       font-weight: 600;
-      font-size: 0.9rem;
-      transition: color 0.2s;
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover { color: var(--pine-green); }
 
     /* Hero Banner */
     .hero-container {
-      max-width: 1140px;
-      margin: 20px auto 0 auto;
+      max-width: 1160px;
+      margin: 24px auto 0 auto;
       padding: 0 20px;
     }
     .hero-banner {
-      background: linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.5)), url('IMG_5687.jpeg') center/cover no-repeat;
-      height: 480px;
-      border-radius: 24px;
+      background: linear-gradient(rgba(26, 48, 38, 0.35), rgba(26, 48, 38, 0.65)), url('IMG_5687.jpeg') center/cover no-repeat;
+      height: 500px;
+      border-radius: var(--radius-xl);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      color: #fff;
-      padding: 40px 20px;
-      box-shadow: var(--shadow-lg);
+      color: #ffffff;
+      padding: 40px 24px;
+      box-shadow: var(--shadow-lift);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
     .hero-banner h1 {
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-size: clamp(2.3rem, 5vw, 3.8rem);
       font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.4);
     }
     .hero-banner p {
-      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
       font-weight: 400;
-      max-width: 640px;
+      max-width: 660px;
       opacity: 0.95;
     }
 
-    /* Rychlá Rezervační Lišta */
+    /* Rychlá rezervační lišta */
     .booking-bar {
-      background: #ffffff;
+      background: var(--card-white);
       border-radius: var(--radius-lg);
-      padding: 20px 28px;
-      margin: -50px auto 40px auto;
-      max-width: 980px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-      border: 1px solid var(--border-color);
+      padding: 22px 30px;
+      margin: -50px auto 44px auto;
+      max-width: 1000px;
+      box-shadow: var(--shadow-lift);
+      border: 1px solid var(--border-warm);
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
-      gap: 16px;
+      gap: 18px;
       align-items: center;
       position: relative;
       z-index: 10;
@@ -146,844 +176,112 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
     .bar-field input, .bar-field select {
-      border: 1px solid var(--border-color);
-      padding: 10px 12px;
-      border-radius: 10px;
+      border: 1px solid var(--border-warm);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
       font-size: 0.95rem;
       font-family: inherit;
       color: var(--text-main);
-      background: #f8fafc;
+      background: #FAF9F6;
     }
     .btn-primary {
-      background: var(--primary);
-      color: #fff;
+      background: var(--forest-dark);
+      color: #ffffff;
       border: none;
-      padding: 14px 28px;
-      border-radius: 12px;
+      padding: 14px 30px;
+      border-radius: var(--radius-md);
       font-weight: 700;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.25);
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(26, 48, 38, 0.25);
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
     }
-    .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); }
-
-    /* Hlavní Kontejner */
-    .main-container {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 20px 60px 20px;
+    .btn-primary:hover {
+      background: var(--pine-green);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(15, 118, 110, 0.35);
     }
 
-    .section-head { text-align: center; margin-bottom: 36px; }
-    .section-head h2 { font-size: 2.1rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; letter-spacing: -0.5px; }
-    .section-head p { color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+    /* Kontejner */
+    .main-container {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 20px 80px 20px;
+    }
+
+    .section-head { text-align: center; margin-bottom: 38px; }
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--wood-gold);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .section-head h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--forest-dark);
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
 
     .section-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      padding: 40px;
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 36px;
+      background: var(--card-white);
+      border-radius: var(--radius-xl);
+      padding: 44px;
+      border: 1px solid var(--border-warm);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 40px;
     }
 
-    /* Grid Vybavení */
+    /* Grid vybavení */
     .features-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
     }
     .feature-item {
-      background: #f8fafc;
-      padding: 24px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      transition: transform 0.2s, border-color 0.2s;
+      background: #FAF9F6;
+      padding: 26px 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-warm);
+      transition: all 0.25s ease;
     }
-    .feature-item:hover { transform: translateY(-3px); border-color: var(--primary); }
-    .feature-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
-    .feature-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+    .feature-item:hover {
+      transform: translateY(-4px);
+      border-color: var(--pine-green);
+      box-shadow: var(--shadow-soft);
+    }
+    .feature-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .feature-title { font-weight: 700; font-size: 1.05rem; color: var(--forest-dark); margin-bottom: 4px; }
     .feature-desc { font-size: 0.9rem; color: var(--text-muted); }
 
-    /* Sezónní Přepínač Aktivit (Bod 5) */
+    /* Sezóny */
     .season-tabs {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 28px;
     }
     .tab-btn {
-      padding: 12px 24px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      background: #f8fafc;
+      padding: 12px 26px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-warm);
+      background: #FAF9F6;
       font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: var(--text-muted);
-    }
-    .tab-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
-    }
-
-    .activities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-    .activity-card {
-      background: #f8fafc;
-      border-radius: var(--radius-md);
-      padding: 24px;
-      border: 1px solid var(--border-color);
-    }
-    .activity-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
-    .activity-card p { font-size: 0.92rem; color: var(--text-muted); }
-
-    /* Interaktivní Kalendář Obsazenosti (Bod 1) */
-    .cal-wrapper {
-      background: #f8fafc;
-      border-radius: var(--radius-md);
-      padding: 24px;
-      border: 1px solid var(--border-color);
-      margin-top: 24px;
-    }
-    .cal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .cal-month-title { font-size: 1.15rem; font-weight: 800; color: var(--text-main); }
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      text-align: center;
-    }
-    .cal-head-day { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); padding-bottom: 6px; }
-    .cal-day-cell {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 12px 0;
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-    .cal-day-cell:hover:not(.disabled):not(.booked) {
-      border-color: var(--primary);
-      background: var(--primary-light);
-    }
-    .cal-day-cell.booked {
-      background: #fee2e2;
-      color: #991b1b;
-      border-color: #fecaca;
-      cursor: not-allowed;
-      text-decoration: line-through;
-      opacity: 0.7;
-    }
-    .cal-day-cell.selected {
-      background: var(--primary) !important;
-      color: #ffffff !important;
-      border-color: var(--primary) !important;
-    }
-    .cal-day-cell.in-range {
-      background: var(--primary-light) !important;
-      border-color: #bbf7d0 !important;
-      color: var(--primary-hover) !important;
-    }
-    .cal-legend {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 16px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    .legend-item { display: flex; align-items: center; gap: 6px; }
-    .legend-box { width: 14px; height: 14px; border-radius: 4px; }
-
-    /* Fotogalerie s Lightboxem */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
-    .gallery-grid img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: var(--radius-md);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-    .gallery-grid img:hover { transform: scale(1.03); box-shadow: var(--shadow-lg); }
-
-    .lightbox-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(15, 23, 42, 0.9);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-    .lightbox-modal img {
-      max-width: 90%;
-      max-height: 85vh;
-      border-radius: 12px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 24px; right: 32px;
-      color: #fff;
-      font-size: 2.5rem;
-      cursor: pointer;
-      font-weight: 300;
-    }
-
-    /* Mapa a Kontakty */
-    .location-contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-    .contact-list { list-style: none; }
-    .contact-list li {
-      margin-bottom: 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 0.98rem;
-    }
-    .contact-icon {
-      width: 40px; height: 40px;
-      background: var(--primary-light);
-      color: var(--primary);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-    .map-container {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border-color);
-      height: 100%;
-      min-height: 280px;
-    }
-
-    /* Ceník */
-    .price-info-box {
-      background: var(--primary-light);
-      border: 1px solid #bbf7d0;
-      border-radius: var(--radius-md);
-      padding: 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .price-big { font-size: 2.4rem; font-weight: 800; color: var(--primary-hover); }
-
-    /* Formulář */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .form-group.full { grid-column: span 2; }
-    label { font-weight: 600; font-size: 0.9rem; margin-bottom: 6px; display: block; }
-    input, select {
-      width: 100%; padding: 12px 16px;
-      border: 1px solid var(--border-color);
-      border-radius: 10px; font-size: 0.95rem; font-family: inherit;
-      background: #f8fafc;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      border-top: 1px solid var(--border-color);
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    @media(max-width: 868px) {
-      .booking-bar { grid-template-columns: 1fr; margin-top: -30px; }
-      .location-contact-grid { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: span 1; }
-      .nav-links { display: none; }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navigace -->
-  <header>
-    <div class="nav-container">
-      <a href="#" class="logo">🌲 CHATA PECKA</a>
-      <ul class="nav-links">
-        <li><a href="#o-chate">O ubytování</a></li>
-        <li><a href="#vybaveni">Vybavení</a></li>
-        <li><a href="#aktivity">Sezónní aktivity</a></li>
-        <li><a href="#galerie">Galerie</a></li>
-        <li><a href="#lokalita">Lokalita & Kontakt</a></li>
-        <li><a href="#cenik">Ceník & Obsazenost</a></li>
-        <li><a href="#rezervace">Rezervace</a></li>
-      </ul>
-    </div>
-  </header>
-
-  <!-- Hero banner s fotkou chaty -->
-  <div class="hero-container">
-    <div class="hero-banner">
-      <h1>Chata Pecka u Nové Pece</h1>
-      <p>Komfortní celoroční útočiště v chráněné krajinné oblasti Šumava až pro 10 hostů.</p>
-    </div>
-  </div>
-
-  <!-- Rychlá rezervační lišta -->
-  <div class="booking-bar">
-    <div class="bar-field">
-      <label>Příjezd</label>
-      <input type="date" id="bar_check_in">
-    </div>
-    <div class="bar-field">
-      <label>Odjezd</label>
-      <input type="date" id="bar_check_out">
-    </div>
-    <div class="bar-field">
-      <label>Hosté</label>
-      <select id="bar_guests">
-        <option value="1">1 osoba</option>
-        <option value="2" selected>2 osoby</option>
-        <option value="4">4 osoby</option>
-        <option value="6">6 osob</option>
-        <option value="8">8 osob</option>
-        <option value="10">10 osob</option>
-      </select>
-    </div>
-    <a href="#rezervace" class="btn-primary">Spočítat cenu</a>
-  </div>
-
-  <div class="main-container">
-
-    <!-- O chatě -->
-    <div class="section-card" id="o-chate">
-      <div class="section-head">
-        <h2>Útulné zázemí v srdci Šumavy</h2>
-        <p>Prostorná chata obklopená lesy a loukami nedaleko Nové Pece a Lipna.</p>
-      </div>
-      <p style="text-align: center; max-width: 820px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem;">
-        Chata Pecka nabízí komfortní zázemí až pro 10 osob. Zahřejte se u vnitřního krbu po celodenním lyžování či výletu na kolech nebo si užijte večerní grilování u venkovního ohniště pod hvězdným nebem Šumavy.
-      </p>
-    </div>
-
-    <!-- Vybavení -->
-    <div class="section-card" id="vybaveni">
-      <div class="section-head">
-        <h2>Klíčové vybavení chaty</h2>
-        <p>Vše potřebné pro vaši pohodu, relaxaci a komfortní pobyt v každém ročním období.</p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-item">
-          <span class="feature-icon">👥</span>
-          <div class="feature-title">Kapacita max. 10 osob</div>
-          <div class="feature-desc">Dostatek prostoru pro rodiny i skupiny přátel.</div>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">🪵</span>
-          <div class="feature-title">Vnitřní krb</div>
-          <div class="feature-desc">Romantická atmosféra a teplo praskajícího dřeva.</div>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">🔥</span>
-          <div class="feature-title">Venkovní ohniště</div>
-          <div class="feature-desc">Příjemné večerní posezení s možností grilování.</div>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">📶</span>
-          <div class="feature-title">Wi-Fi připojení</div>
-          <div class="feature-desc">Spolehlivý internet i uprostřed přírody.</div>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">🚗</span>
-          <div class="feature-title">Parkování (max. 2 auta)</div>
-          <div class="feature-desc">Bezplatné parkovací stání přímo u chaty.</div>
-        </div>
-        <div class="feature-item">
-          <span class="feature-icon">🚲</span>
-          <div class="feature-title">Cyklistika & Běžky</div>
-          <div class="feature-desc">Přímé napojení na šumavské stezky v léte i v zimě.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Aktivity v okolí SEZÓNNÍ (Bod 5) -->
-    <div class="section-card" id="aktivity">
-      <div class="section-head">
-        <h2>Celoroční aktivity u Nové Pece</h2>
-        <p>Objevte krásy šumavské přírody v jakémkoliv ročním období.</p>
-      </div>
-
-      <!-- Přepínač sezón -->
-      <div class="season-tabs">
-        <button class="tab-btn active" onclick="switchSeason('summer')">☀️ Jaro & Léto</button>
-        <button class="tab-btn" onclick="switchSeason('winter')">❄️ Podzim & Zima</button>
-      </div>
-
-      <!-- Letní aktivity -->
-      <div id="summer-activities" class="activities-grid">
-        <div class="activity-card">
-          <h3>🚲 Cyklostezka Nová Pec – Stožec</h3>
-          <p>Unikátní 16km hladká asfaltová stezka podél řeky Vltavy I. zónou NP Šumava. Ideální pro cyklisty, in-line bruslaře i rodiny s dětmi.</p>
-        </div>
-        <div class="activity-card">
-          <h3>🌊 Vodní sporty & Lipno</h3>
-          <p>Pohodová cyklotrasa i pláže v okruhu pár km. Možnost splouvání Teplé Vltavy na kánoích přímo z Nové Pece.</p>
-        </div>
-        <div class="activity-card">
-          <h3>🪵 Schwarzenberský kanál</h3>
-          <p>Historické technické dílo lemované stínem lesa. Perfektní pro klidné projížďky na kole i pěší turistiku.</p>
-        </div>
-        <div class="activity-card">
-          <h3>⛰️ Plešné jezero & Hora Plechý</h3>
-          <p>Magické ledovcové jezero a nejvyšší vrchol české Šumavy leží přímo nad Novou Pecí.</p>
-        </div>
-      </div>
-
-      <!-- Zimní aktivity -->
-      <div id="winter-activities" class="activities-grid" style="display: none;">
-        <div class="activity-card">
-          <h3>🎿 Skiareál Hochficht (Rakousko)</h3>
-          <p>Špičkové alpské lyžování jen cca 25 minut autem od chaty! 21 km sjezdovek, moderní kabinkové lanovky a dětský park.</p>
-        </div>
-        <div class="activity-card">
-          <h3>🎿 Běžecké stopy Nová Pec</h3>
-          <p>Upravované běžecké stopy začínají přímo v okolí Nové Pece a navazují na šumavskou magistrálu.</p>
-        </div>
-        <div class="activity-card">
-          <h3>⛸️ Bruslení na zamrzlém Lipně</h3>
-          <p>V zimě se hladina Lipna mění v nejdelší přírodní bruslařskou dráhu na světě.</p>
-        </div>
-        <div class="activity-card">
-          <h3>🔥 Pohoda u vnitřního krbu</h3>
-          <p>Po dni na sjezdovce si vychutnáte zasloužený relax u romanticky praskajícího krbu s hrnkem svařeného vína.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Fotogalerie s Lightboxem -->
-    <div class="section-card" id="galerie">
-      <div class="section-head">
-        <h2>Fotogalerie</h2>
-        <p>Kliknutím na fotku si ji otevřete na celou obrazovku.</p>
-      </div>
-
-      <div class="gallery-grid">
-        <img src="IMG_5687.jpeg" alt="Chata Pecka exteriér" onclick="openLightbox(this.src)">
-        <img src="IMG_5649.jpeg" alt="Chata Pecka interiér" onclick="openLightbox(this.src)">
-        <img src="IMG_5651.jpeg" alt="Vnitřní krb a obývák" onclick="openLightbox(this.src)">
-        <img src="IMG_5670.jpeg" alt="Výhled z okna" onclick="openLightbox(this.src)">
-        <img src="IMG_5674.jpeg" alt="Okolní příroda CHKO" onclick="openLightbox(this.src)">
-        <img src="IMG_5683.jpeg" alt="Zahrada a ohniště" onclick="openLightbox(this.src)">
-      </div>
-    </div>
-
-    <!-- Lightbox Okno -->
-    <div id="lightbox" class="lightbox-modal" onclick="closeLightbox()">
-      <span class="lightbox-close">&times;</span>
-      <img id="lightbox-img" src="" alt="Detail fotky">
-    </div>
-
-    <!-- Lokalita & Kontakty -->
-    <div class="section-card" id="lokalita">
-      <div class="section-head">
-        <h2>Kde nás najdete & Kontakt</h2>
-        <p>Klidná lokalita v chráněné krajinné oblasti u Nové Pece.</p>
-      </div>
-
-      <div class="location-contact-grid">
-        <div>
-          <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 20px;">Kontaktní údaje & Pravidla</h3>
-          <ul class="contact-list">
-            <li>
-              <div class="contact-icon">📍</div>
-              <div><strong>Lokalita:</strong> Nová Pec / CHKO Šumava</div>
-            </li>
-            <li>
-              <div class="contact-icon">📞</div>
-              <div><strong>Telefon:</strong> <a href="tel:+420736275562" style="color: var(--primary); font-weight: 700; text-decoration: none;">+420 736 275 562</a></div>
-            </li>
-            <li>
-              <div class="contact-icon">✉️</div>
-              <div><strong>E-mail:</strong> <a href="mailto:tomaskrippner@seznam.cz" style="color: var(--primary); font-weight: 700; text-decoration: none;">tomaskrippner@seznam.cz</a></div>
-            </li>
-            <li>
-              <div class="contact-icon">🕒</div>
-              <div><strong>Příjezd / Odjezd:</strong> Check-in od 15:00 | Check-out do 10:00</div>
-            </li>
-            <li>
-              <div class="contact-icon">🐾</div>
-              <div><strong>Domácí mazlíčci:</strong> Po předchozí telefonické domluvě.</div>
-            </li>
-            <li>
-              <div class="contact-icon">🚭</div>
-              <div><strong>Pravidla objektu:</strong> Přísný zákaz kouření uvnitř chaty.</div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="map-container">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42232.81229443729!2d13.8821945!3d48.7891823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4774e1d71cb9969d%3A0x400af0f6615b3c0!2s388%2001%20Nov%C3%A1%20Pec!5e0!3m2!1scs!2scz!4v1700000000000!5m2!1scs!2scz" 
-            width="100%" 
-            height="100%" 
-            style="border:0; min-height: 280px;" 
-            allowfullscreen="" 
-            loading="lazy">
-          </iframe>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ceník a Interaktivní Kalendář (Bod 1) -->
-    <div class="section-card" id="cenik">
-      <div class="section-head">
-        <h2>Ceník & Interaktivní Kalendář</h2>
-        <p>Kliknutím do kalendáře si můžete přímo zvolit požadované datum příjezdu a odjezdu.</p>
-      </div>
-
-      <div class="price-info-box">
-        <div>
-          <div style="color: #166534; font-weight: 600; font-size: 0.95rem;">Cena za osobu / noc</div>
-          <div class="price-big">1 600 Kč</div>
-        </div>
-        <ul style="list-style: none; color: #166534; font-weight: 600; font-size: 0.95rem;">
-          <li>✓ Vnitřní krb, venkovní ohniště, Wi-Fi zdarma</li>
-          <li>✓ Parkování pro max. 2 auta v ceně</li>
-          <li>✓ Minimální délka pobytu: 2 noci</li>
-          <li>✓ Maximální kapacita chaty: 10 osob</li>
-        </ul>
-      </div>
-
-      <!-- Interaktivní Kalendář -->
-      <div class="cal-wrapper">
-        <div class="cal-header">
-          <button class="tab-btn" onclick="changeMonth(-1)">&lt; Předchozí</button>
-          <div class="cal-month-title" id="calMonthTitle">Říjen 2026</div>
-          <button class="tab-btn" onclick="changeMonth(1)">Následující &gt;</button>
-        </div>
-        
-        <div class="cal-grid" id="calGrid">
-          <!-- Dynamicky generované dny JS skriptem -->
-        </div>
-
-        <div class="cal-legend">
-          <div class="legend-item"><div class="legend-box" style="background:#ffffff; border:1px solid #e2e8f0;"></div> Volno</div>
-          <div class="legend-item"><div class="legend-box" style="background:#0f766e;"></div> Váš výběr</div>
-          <div class="legend-item"><div class="legend-box" style="background:#fee2e2; border:1px solid #fecaca;"></div> Obsazeno</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Rezervační formulář -->
-    <div class="section-card" id="rezervace">
-      <div class="section-head">
-        <h2>Rezervace pobytu</h2>
-        <p>Zadejte požadovaný termín a počet osob pro výpočet nezávazné poptávky.</p>
-      </div>
-
-      <form id="bookingForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Datum příjezdu</label>
-            <input type="date" id="check_in" required>
-          </div>
-          <div class="form-group">
-            <label>Datum odjezdu</label>
-            <input type="date" id="check_out" required>
-          </div>
-          <div class="form-group">
-            <label>Počet osob (max. 10)</label>
-            <input type="number" id="guests" min="1" max="10" value="2" required>
-          </div>
-          <div class="form-group">
-            <label>Jméno a příjmení</label>
-            <input type="text" id="guest_name" placeholder="Jan Novák" required>
-          </div>
-          <div class="form-group full">
-            <label>E-mail</label>
-            <input type="email" id="guest_email" placeholder="jan@novak.cz" required>
-          </div>
-          <div class="form-group full">
-            <label>Telefonní číslo</label>
-            <input type="tel" id="guest_phone" placeholder="+420 736 275 562" required>
-          </div>
-        </div>
-
-        <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin: 24px 0; text-align: center; border: 1px solid var(--border-color);">
-          <div style="font-size: 0.9rem; color: var(--text-muted);">Celková odhadovaná cena za pobyt:</div>
-          <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="totalPrice">0 Kč</div>
-        </div>
-
-        <button type="submit" id="submitBtn" class="btn-primary" style="width: 100%; padding: 16px;">Odeslat nezávaznou rezervaci</button>
-      </form>
-
-      <div id="message" style="margin-top: 16px; display: none; padding: 14px; border-radius: 10px; text-align: center; font-weight: 600;"></div>
-    </div>
-
-  </div>
-
-  <footer>
-    &copy; 2026 Chata Pecka | Ubytování v chráněné krajinné oblasti u Nové Pece.
-  </footer>
-
-  <!-- JS Skripty -->
-  <script>
-    // 1. Přepínač Sezón (Bod 5)
-    function switchSeason(season) {
-      const summerGrid = document.getElementById('summer-activities');
-      const winterGrid = document.getElementById('winter-activities');
-      const btns = document.querySelectorAll('.season-tabs .tab-btn');
-
-      if (season === 'summer') {
-        summerGrid.style.display = 'grid';
-        winterGrid.style.display = 'none';
-        btns[0].classList.add('active');
-        btns[1].classList.remove('active');
-      } else {
-        summerGrid.style.display = 'none';
-        winterGrid.style.display = 'grid';
-        btns[0].classList.remove('active');
-        btns[1].classList.add('active');
-      }
-    }
-
-    // 2. Lightbox fotogalerie
-    function openLightbox(src) {
-      document.getElementById('lightbox-img').src = src;
-      document.getElementById('lightbox').style.display = 'flex';
-    }
-    function closeLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
-    }
-
-    // 3. Propojení rezervační lišty a kalkulačky
-    const barCheckIn = document.getElementById('bar_check_in');
-    const barCheckOut = document.getElementById('bar_check_out');
-    const barGuests = document.getElementById('bar_guests');
-
-    const checkInInput = document.getElementById('check_in');
-    const checkOutInput = document.getElementById('check_out');
-    const guestsInput = document.getElementById('guests');
-    const totalPriceEl = document.getElementById('totalPrice');
-
-    const PRICE_PER_PERSON_NIGHT = 1600;
-
-    function calculatePrice() {
-      const checkIn = new Date(checkInInput.value);
-      const checkOut = new Date(checkOutInput.value);
-      const guests = parseInt(guestsInput.value) || 1;
-
-      if (checkInInput.value && checkOutInput.value && checkOut > checkIn) {
-        const nights = Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24));
-        const total = nights * guests * PRICE_PER_PERSON_NIGHT;
-        totalPriceEl.innerText = total.toLocaleString('cs-CZ') + ' Kč (' + nights + ' ' + (nights === 1 ? 'noc' : (nights < 5 ? 'noci' : 'nocí')) + ' × ' + guests + ' ' + (guests === 1 ? 'osoba' : (guests < 5 ? 'osoby' : 'osob')) + ')';
-        return total;
-      } else {
-        totalPriceEl.innerText = '0 Kč';
-        return 0;
-      }
-    }
-
-    barCheckIn.addEventListener('change', () => { checkInInput.value = barCheckIn.value; calculatePrice(); renderCalendar(); });
-    barCheckOut.addEventListener('change', () => { checkOutInput.value = barCheckOut.value; calculatePrice(); renderCalendar(); });
-    barGuests.addEventListener('change', () => { guestsInput.value = barGuests.value; calculatePrice(); });
-
-    checkInInput.addEventListener('change', () => { barCheckIn.value = checkInInput.value; calculatePrice(); renderCalendar(); });
-    checkOutInput.addEventListener('change', () => { barCheckOut.value = checkOutInput.value; calculatePrice(); renderCalendar(); });
-    guestsInput.addEventListener('input', calculatePrice);
-
-    // 4. Interaktivní Kalendář Obsazenosti (Bod 1)
-    let currentCalDate = new Date();
-    let selectedStartDate = null;
-    let selectedEndDate = null;
-    let bookedRanges = []; // Zde se automaticky načtou obsazené dny ze Supabase
-
-    const monthNames = ["Leden", "Únor", "Březen", "Duben", "Květen", "Červen", "Červenec", "Srpen", "Září", "Říjen", "Listopad", "Prosinec"];
-
-    function changeMonth(delta) {
-      currentCalDate.setMonth(currentCalDate.getMonth() + delta);
-      renderCalendar();
-    }
-
-    function renderCalendar() {
-      const year = currentCalDate.getFullYear();
-      const month = currentCalDate.getMonth();
-      document.getElementById('calMonthTitle').innerText = monthNames[month] + " " + year;
-
-      const calGrid = document.getElementById('calGrid');
-      calGrid.innerHTML = '';
-
-      // Dny v týdnu
-      const dayHeaders = ["Po", "Út", "St", "Čt", "Pá", "So", "Ne"];
-      dayHeaders.forEach(d => {
-        const head = document.createElement('div');
-        head.className = 'cal-head-day';
-        head.innerText = d;
-        calGrid.appendChild(head);
-      });
-
-      const firstDayOfMonth = new Date(year, month, 1);
-      const daysInMonth = new Date(year, month + 1, 0).getDate();
-      
-      // Úprava pro začátek od pondělí (0 = Po, 6 = Ne)
-      let startingDay = firstDayOfMonth.getDay() - 1;
-      if (startingDay === -1) startingDay = 6;
-
-      // Prázdné buňky před 1. dnem
-      for (let i = 0; i < startingDay; i++) {
-        const empty = document.createElement('div');
-        calGrid.appendChild(empty);
-      }
-
-      const selIn = checkInInput.value ? new Date(checkInInput.value) : null;
-      const selOut = checkOutInput.value ? new Date(checkOutInput.value) : null;
-
-      // Generování jednotlivých dnů měsíce
-      for (let day = 1; day <= daysInMonth; day++) {
-        const cellDate = new Date(year, month, day);
-        const dateStr = cellDate.toISOString().split('T')[0];
-        
-        const cell = document.createElement('div');
-        cell.className = 'cal-day-cell';
-        cell.innerText = day;
-
-        // Kontrola obsazenosti
-        const isBooked = bookedRanges.some(r => cellDate >= new Date(r.check_in) && cellDate <= new Date(r.check_out));
-
-        if (isBooked) {
-          cell.classList.add('booked');
-        } else {
-          // Zvýraznění vybraného rozmezí
-          if (selIn && dateStr === checkInInput.value) cell.classList.add('selected');
-          if (selOut && dateStr === checkOutInput.value) cell.classList.add('selected');
-          if (selIn && selOut && cellDate > selIn && cellDate < selOut) cell.classList.add('in-range');
-
-          cell.addEventListener('click', () => handleCalDayClick(dateStr));
-        }
-
-        calGrid.appendChild(cell);
-      }
-    }
-
-    function handleCalDayClick(dateStr) {
-      if (!selectedStartDate || (selectedStartDate && selectedEndDate)) {
-        selectedStartDate = dateStr;
-        selectedEndDate = null;
-        checkInInput.value = dateStr;
-        barCheckIn.value = dateStr;
-        checkOutInput.value = '';
-        barCheckOut.value = '';
-      } else if (selectedStartDate && !selectedEndDate) {
-        if (new Date(dateStr) > new Date(selectedStartDate)) {
-          selectedEndDate = dateStr;
-          checkOutInput.value = dateStr;
-          barCheckOut.value = dateStr;
-        } else {
-          selectedStartDate = dateStr;
-          checkInInput.value = dateStr;
-          barCheckIn.value = dateStr;
-        }
-      }
-      calculatePrice();
-      renderCalendar();
-    }
-
-    // 5. Supabase Integrace (Načtení obsazených dnů + Odeslání)
-    const SUPABASE_URL = 'https://tvuj-supabase-url.supabase.co';
-    const SUPABASE_ANON_KEY = 'sb_publishable_rwgkmX0f2MzyHIicrUyVyw_UQV6ke4d';
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    async function loadBookedDates() {
-      try {
-        const { data, error } = await _supabase
-          .from('reservations')
-          .select('check_in, check_out');
-        if (data && !error) {
-          bookedRanges = data;
-          renderCalendar();
-        }
-      } catch (err) {
-        console.log("Supabase ještě není plně konfigurván, použijí se výchozí volné dny.");
-        renderCalendar();
-      }
-    }
-
-    // Inicializace kalendáře při načtení
-    loadBookedDates();
-
-    document.getElementById('bookingForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      
-      const total_price = calculatePrice();
-      if (total_price <= 0) {
-        alert('Datum odjezdu musí být po datu příjezdu!');
-        return;
-      }
-
-      const submitBtn = document.getElementById('submitBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerText = 'Odesílá se...';
-
-      const { error } = await _supabase
-        .from('reservations')
-        .insert([{ 
-          check_in: checkInInput.value, 
-          check_out: checkOutInput.value, 
-          guests: parseInt(guestsInput.value), 
-          guest_name: document.getElementById('guest_name').value, 
-          guest_email: document.getElementById('guest_email').value, 
-          guest_phone: document.getElementById('guest_phone').value, 
-          total_price 
-        }]);
-
-      submitBtn.disabled = false;
-      submitBtn.innerText = 'Odeslat nezávaznou rezervaci';
-
-      const msg = document.getElementById('message');
-      msg.style.display = 'block';
-      if (error) {
-        msg.innerText = 'Chyba při odesílání: ' + error.message;
-        msg.style.background = '#fee2e2';
-        msg.style.color = '#991b1b';
-      } else {
-        msg.innerText = 'Děkujeme! Vaše rezervace byla úspěšně odeslána.';
-        msg.style.background = '#dcfce7';
-        msg.style.color = '#166534';
-        document.getElementById('bookingForm').reset();
-        totalPriceEl.innerText = '0 Kč';
-        loadBookedDates();
-      }
-    });
-  </script>
-</body>
-</html>
+      font-size
